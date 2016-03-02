@@ -6,8 +6,11 @@
 		"start": "node app.js"
 	},
 	"dependencies": {
+	    "twilio": "*",
 		"express": "4.13.x",
-		"cfenv": "1.0.x"
+		"body-parser":"1.5.2",
+		"cfenv": "1.0.x",
+		"ibmiotf":"~0.2.11"	
 	},
 	"repository": {},
 	"engines": {
