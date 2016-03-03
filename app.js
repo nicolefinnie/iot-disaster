@@ -40,15 +40,15 @@ app.use(express.static(__dirname + '/public'));
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
-// this iot service config 
-var iotConfig;
+// this iot service config & twilioConfig 
+var iotConfig, twilioConfig;
 
 //Loop through user-provided config info and pull out our Twilio credentials
 var twilioSid, twilioToken;
-var twilioConfig = appEnv.getServices('iot-twilio');
+var baseConfig = appEnv.getServices('iot-python');
 
-//local vcap_service.json 
-if (!twilioConfig || Object.keys(twilioConfig).length === 0) {
+//local vcap_service.json ported from Bluemix, but the vcap_service stored in Bluemix is actually different than it provides, that sucks!
+if (!baseConfig || Object.keys(baseConfig).length === 0) {
   var configJSON = require('./vcap_service.json');
   configJSON["user-provided"].forEach(function(entry) {
     if (entry.name === 'iot-twilio') {
@@ -59,17 +59,18 @@ if (!twilioConfig || Object.keys(twilioConfig).length === 0) {
     if (entry.name === 'iot-python') {
       iotConfig = entry;
     }
-  })
-  
-} 
+  })  
+} else {
+  twilioConfig = baseConfig['iot-twilio'];
+  iotConfig = baseConfig['iot-python'];
+}
+
+console.log('iot config is ' + JSON.stringify(iotConfig));
+console.log('twilio config is ' + JSON.stringify(twilioConfig));
 
 twilioSid = twilioConfig.credentials.accountSID;
 twilioToken = twilioConfig.credentials.authToken;
 
-
-//Polar Snow's raspberryPi
-var polarSnowDeviceID = 'b827eb92cee9';
-  
 var iotAppConfig = {
     "org" : iotConfig.credentials.org,
     "id" : iotConfig.credentials.iotCredentialsIdentifier,
@@ -77,6 +78,10 @@ var iotAppConfig = {
     "auth-key" : iotConfig.credentials.apiKey,
     "auth-token" : iotConfig.credentials.apiToken
 }
+
+
+//Polar Snow's raspberryPi
+var polarSnowDeviceID = 'b827eb92cee9';
 
 var appClient = new Client(iotAppConfig);
 appClient.connect();
