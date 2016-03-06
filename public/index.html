@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html> 
 <html ng-app="core">
     <head>
     <!-- CSS  -->
@@ -13,13 +13,10 @@
   
   <nav>
      <div class="nav-wrapper container left"><img src="https://developer.ibm.com/bluemix/wp-content/uploads/sites/20/2014/10/iotThumb.png">
-     <a href="index.html" class="brand-logo"><h5>Home Disaster Detection System</h5></a>
+     <a href="index.html" class="brand-logo"><h5>Home Disaster Detection System</h5><h6>IoT Safe Community</h6></a>
      </div>
    </nav>
-     
-  <div ng-include src="'partials/iot_page.html'"></div>
-        
- 
+  <div ng-include src="'partials/home.client.html'"></div>
  <!-- Start of footer -->  
   <footer class="page-footer">
     <div class="ibm-footer-copy-right-container">
@@ -32,9 +29,8 @@
   <!-- End of footer -->    
  
     <!--  Scripts-->
-    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="/scripts/jquery/dist/jquery.min.js"></script>
     <script src="js/materialize.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script src="js/app.js"></script>

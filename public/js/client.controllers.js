@@ -2,7 +2,6 @@
 
 var homeControllers = angular.module('HomeControllers', []);
 
-
 homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval',
 function ($scope, $rootScope, $http, $interval) {
   var quakeMagnitude = 0;
@@ -17,6 +16,21 @@ function ($scope, $rootScope, $http, $interval) {
     });   
   };
   
+  $scope.sendMessage = function(){
+    //TODO register phoneNumber and message
+    var msgData = { 'phoneNumber': $scope.phoneNumber, 
+                    'message': $scope.message};
+    $http({
+      method: 'POST',
+      url: '/message',
+      data: msgData
+    }).then(function successCallback(response) {
+       console.log("successfully sent text");
+    }, function errorCallback(response) {
+        console.log("failed to send text");
+    });
+  };
+  
    // Set of all tasks that should be performed periodically
   $scope.runIntervalTasks = function() {
   
@@ -24,15 +38,32 @@ function ($scope, $rootScope, $http, $interval) {
       method: 'GET',
       url: '/sensordata'
     }).then(function successCallback(response) {
-      // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
-      if(Object.keys(response.data.payload).length > 0){
-          var payload = JSON.parse(response.data.payload);
+      response.data.forEach(function(myHouse){
+        // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
+        if(Object.keys(myHouse.quakePayload).length > 0){
+          var payload = JSON.parse(myHouse.quakePayload);
+          
           quakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
           // TODO 
-          if (quakeMagnitude > 100) {
-            $scope.sendQuakeAlert();
+          if (quakeMagnitude > 10) {
+            //$scope.sendMessage();
+            //$scope.sendQuakeAlert();
+            var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
+            Materialize.toast($toastContent, 1000);
           }
-       }
+        }
+      
+        // switch on I'm home
+        if(Object.keys(myHouse.motionPayload).length > 0){
+          var payload = JSON.parse(myHouse.motionPayload);
+          if (myHouse.name === "polarsnow") {
+            $('#minionSwitch').prop('checked', payload.motionDetected);
+          }
+        }
+      
+      });
+      
+      
     }, function errorCallback(response) {
         console.log("failed to listen to sensor data");
     });   
@@ -70,20 +101,39 @@ function ($scope, $rootScope, $http, $interval) {
   });
 
 
-  var quakeSamplePoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0];
+  var quakeThreshold = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25];
+  var quakeSamplePoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   
-  var canvas = document.getElementById('canvas'),
+  var canvas = document.getElementById('flugfeldCanvas'),
   ctx = canvas.getContext('2d'),
   startingData = {
-    labels: ["", "", "", "", "", "", "", "","", "", "", "","", "", "", "","", "", "", "",""],
+    labels: ["", "", "", "", "", "", "", "","", ""],
     datasets: [
+          {
+             label: "Earthquake Threshold",
+             fillColor: "rgba(220,220,220,0.2)",
+             strokeColor: "rgba(220,220,220,1)",
+             data: quakeThreshold
+        },
         {
+            label: "Finnie's Nerdy Palace",
             fillColor: "rgba(151,187,205,0.2)",
             strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
             data: quakeSamplePoints
-        }
+        }, 
+        {
+          label: "IBM Böblingen Lab",
+          fillColor: "rgba(153,204,0,0.2)",
+          strokeColor: "rgba(153,204,0,1)",
+          data: quakeSamplePoints
+      },
+        {
+          label: "Kai's Kingdom",
+          fillColor: "rgba(255,255,0,0.2)",
+          strokeColor: "rgba(255,255,0,1)",
+          data: quakeSamplePoints
+      }
+        
     ]
   };
 
@@ -91,9 +141,12 @@ function ($scope, $rootScope, $http, $interval) {
 var myLiveChart = new Chart(ctx).Line(startingData, 
     {animationSteps: 15, 
      scaleOverride : true,
-     scaleSteps : 10,
-     scaleStepWidth : 30,
-     scaleStartValue : 0 
+     scaleSteps : 5,
+     scaleStepWidth : 10,
+     scaleStartValue : 0, 
+     scaleShowVerticalLines: false,
+     pointDotRadius : 5,
+     pointDot : false
      });
 
 
@@ -105,42 +158,12 @@ setInterval(function(){
   
   // Update one of the points in the second dataset
   for (var i=0; i < startingData.labels.length; i++){
-    myLiveChart.datasets[0].points[i].value = quakeSamplePoints[i];
+    myLiveChart.datasets[1].points[i].value = quakeSamplePoints[i];
   }
   myLiveChart.update();
 
   }
   , 500);
-
 }
 ]);
-
-
-homeControllers.controller('MessageController', ['$scope', '$http', 
-  function ($scope, $http) {
-  $scope.sendMessage = function(){
-  
-    var msgData = { 'phoneNumber': $scope.phoneNumber, 
-                    'message': $scope.message};
-    $http({
-      method: 'POST',
-      url: '/message',
-      data: msgData
-    }).then(function successCallback(response) {
-        // this callback will be called asynchronously
-        // when the response is available
-        console.log("successfully sent text");
-    }, function errorCallback(response) {
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-        console.log("failed to send text");
-    });
-  };
-}
-]);
-
-
-
-
-
 

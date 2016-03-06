@@ -1,0 +1,85 @@
+ <section>
+            <div class="ibm-widget card">
+              <div class="card-content">
+              <div class="card-title"><i class="material-icons">my_location</i>&nbsp;&nbsp;Last activities of residents</div>
+                  <div id="map"></div>
+              </div>
+              <div class="card-action">
+               <div class="row">
+                   <!-- minion Liam -->
+                    <div class="col m1 s4">
+                        <img src="images/freeMinionIcons/minion.png">
+                    </div>
+                    <div class="col m5 s8">
+                        <div class="switch">
+                         <p>
+                           <label>
+                            Unknown
+                            <input id="minionSwitch" type="checkbox">
+                            <span class="lever"></span>
+                            Home
+                            </label>
+                          </p>
+                        </div>
+                    </div>
+                    <!-- minion Nicole -->
+                    <div class="col m1 s4">
+                        <img src="images/freeMinionIcons/miniongirl.png">
+                    </div>
+                    <div class="col m5 s8">
+                        <div class="switch">
+                         <p>
+                           <label>
+                            Unknown
+                            <input id="minionGirlSwitch" type="checkbox">
+                            <span class="lever"></span>
+                            Home
+                            </label>
+                          </p>
+                     </div>
+                    </div>
+              </div>
+              <!-- minion Kai -->
+              <div class="row">
+                    <div class="col m1 s4">
+                        <img src="images/freeMinionIcons/miniononeeye.png">
+                    </div>
+                    <div class="col m5 s8">
+                        <div class="switch">
+                         <p>
+                           <label>
+                            Unknown
+                            <input  id="minionOneEyeSwitch" type="checkbox">
+                            <span class="lever"></span>
+                            Home
+                            </label>
+                          </p>
+                         </div>
+                    </div>
+                     <!-- minion Pradeep & Shalini -->
+                    <div class="col m1 s4">
+                        <img src="images/freeMinionIcons/minionduck.png">
+                    </div>
+                    <div class="col m5 s8">
+                        <div class="switch">
+                         <p>
+                           <label>
+                            Unknown
+                            <input id="minionDuckSwitch" type="checkbox">
+                            <span class="lever"></span>
+                            Home
+                            </label>
+                          </p>
+                        </div>   
+                    </div> 
+               </div>
+              <!-- end of switches -->
+              </div> <!-- end of card-action -->
+           </div>
+    <!-- END of google map -->
+    <!-- initMap() defined here, it has to be called after google map has been added to the DOM document, that's why it's here--> 
+    <script src="js/googleMap.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp7zB3Ra5P8pSVC8-B-YZszN-LGjJvnRQ&callback=initMap">
+    </script>
+</section>

@@ -11,7 +11,8 @@
 		"body-parser":"1.5.2",
 		"cfenv": "1.0.x",
 		"ibmiotf":"~0.2.11",
-		"chart.js":"*"
+		"chart.js":"*",
+		"jquery": "^2.1.4"
 		 
 	},
 	"repository": {},

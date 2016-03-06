@@ -109,20 +109,29 @@ appClient.on("connect", function () {
 });
 
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
-var polarSnowSensor = {"payload":{}};
 var otherSensor = {"payload":{}};
+var allHouses = [{"name":"polarsnow", "deviceId":polarSnowDeviceID, "quakePayload":{}, "motionPayload":{}}];
+
+
 appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,payload){
-  if ( eventType === 'quakeSensor' ){
-    if ( deviceId === polarSnowDeviceID ) {
-      polarSnowSensor.payload = JSON.parse(payload);
+  allHouses.forEach(function(myHouse) {
+    if (myHouse.deviceId === deviceId) {
+      if ( eventType === 'quakeSensor' ){
+        myHouse.quakePayload = JSON.parse(payload);
+      } 
+      else if (eventType === 'motionSensor'){
+        myHouse.motionPayload = JSON.parse(payload);
+      }
+      else {
+        console.log('Got other events of ' + eventType + ' from ' + deviceId);
+      } 
     }
-  } else {
-    console.log('Got other events of ' + eventType + ' from ' + deviceId);
-  }
+  });
+  
 });
 
 app.post('/message', twilioServer.sendMessage(twilio, twilioSid, twilioToken));
-app.get('/sensordata', raspberryPiServer.returnCurrentSensorData(polarSnowSensor));
+app.get('/sensordata', raspberryPiServer.returnCurrentSensorData(allHouses));
 app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, polarSnowDeviceID));
 
 // start server on the specified port and binding host

@@ -19,8 +19,9 @@ exports.sendQuakeAlert = function(appClient, deviceId){
 
 
 // client asks server for the sensor data, and server sends back the sensor data
-exports.returnCurrentSensorData = function(sensors){
+exports.returnCurrentSensorData = function(sensorData){
   return function(req, res){
-    res.send(sensors);
+    res.send(sensorData);
+    
   };
 };

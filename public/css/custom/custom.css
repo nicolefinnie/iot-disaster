@@ -1,3 +1,5 @@
+/*csslint ids:false*/
+
 nav {
  background-color: #3A4B54 !important;
  height: 100px !important;
@@ -25,7 +27,6 @@ body{
     
 
 footer {
-  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -60,3 +61,70 @@ footer.page-footer .ibm-footer-copy-right-container {
 footer.page-footer .ibm-footer-copy-right-container a {
       text-decoration: underline; 
 }    
+
+#map {
+ display: block;
+    width: 100%;
+    height: 375px;
+}
+/* override materialize #toast-container */
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #toast-container {
+    left: 50%; } }
+@media only screen and (min-width: 993px) {
+  #toast-container {
+    right: 50%; } }
+.toast{
+    background-color: #8c101c;
+}
+
+.ibm-widget.card {
+  background-color: #f9f9fb;
+  color: #5a5a5a; }
+  .ibm-widget.card .card-content .card-title {
+    color: #3c4646;
+    font-weight: bold;
+    position: relative; }
+    
+  .ibm-widget.card .card-content #map {
+    width: 100%;
+    height: 375px;
+  }
+  
+  .ibm-widget.card .card-action {
+    background-color: #5a5a5a;
+    padding-bottom: 1px;
+  }
+  .ibm-widget.card .card-action svg{
+    fill: white;
+    width: 48px;
+  }
+  .ibm-widget.card .card-action label, p{
+    color: white;
+  }
+  .ibm-widget.card .card-action img{
+    width: 48px;
+  }
+  .ibm-widget.card .card-action a {
+    text-transform: capitalize;
+    color: #3c4646; }
+  
+  .ibm-widget.card .card-action a.cyan-btn {
+    background-color: rgba(151,187,205,1);
+    height: 2px;
+    width: 200px;
+  }
+  
+  .ibm-widget.card .card-action a.green-btn {
+    background-color: rgba(153,204,0,1);
+    height: 2px;
+    width: 200px;
+  }
+  
+   
+  .ibm-widget.card .card-action a.yellow-btn {
+    background-color: rgba(255,255,0,1);
+    height: 2px;
+    width: 200px;
+  } 
+    
