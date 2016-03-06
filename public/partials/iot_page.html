@@ -1,0 +1,20 @@
+<section>     
+<div class="container"  ng-controller="HomeController" >   
+       <br/>
+        <div style="width:100%">
+            <div>
+                <canvas id="canvas" height="400" width="1200"></canvas>
+                <script src="/scripts/chart.js/Chart.js"></script>
+            </div>
+        </div>
+           <div class="col m12 s12" ng-controller="MessageController" >
+        <form ng-submit="sendMessage()">
+            <input ng-model="phoneNumber" type="text" placeholder="12345"/>
+            <input ng-model="message" type="text" placeholder="Polar Snow, you have to run RIGHT NOW!"/>
+            <button type="submit" class="btn-large waves-effect waves-light">Text your friends about earthquakes</button>
+        </form>
+        </div>
+</div>
+   
+</section>
+

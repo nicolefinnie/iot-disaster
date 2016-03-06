@@ -3,26 +3,34 @@
     <head>
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <title>Hello disaster</title>
-     </head>
-    <body>
-        <h1>Simple nodejs App to Turn a Light on an off</h1>
-        <br />
-        <div ng-controller="HomeController">
-        <div class="col m10 s10" ng-controller="MessageController" >
-        <form ng-submit="sendMessage()">
-            <input ng-model="phoneNumber" type="text" placeholder="5555551212"/>
-            <input ng-model="message" type="text" placeholder="Hi Polar Snow"/>
-            <button type="submit" class="btn-large waves-effect waves-light">send message to your friend</button>
-        </form>
-        </div>
-        <div class="col m10 s10" ng-controller="LightController">
-            <button type="submit" ng-click="switchLight()" class="btn-large waves-effect waves-light">{{switchOnOff}}</button>
-        </div>
-        </div>
+    <link href="css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <title>Hello disaster</title>
+    </head>
+  <body>
+  
+  <nav>
+     <div class="nav-wrapper container left"><img src="https://developer.ibm.com/bluemix/wp-content/uploads/sites/20/2014/10/iotThumb.png">
+     <a href="index.html" class="brand-logo"><h5>Home Disaster Detection System</h5></a>
+     </div>
+   </nav>
+     
+  <div ng-include src="'partials/iot_page.html'"></div>
         
+ 
+ <!-- Start of footer -->  
+  <footer class="page-footer">
+    <div class="ibm-footer-copy-right-container">
+       <div class="container">
+      © 2016 powered by <a href="http://www.ibm.com/Bluemix">IBM Bluemix</a> & 
+      <a href="http://www.ibm.com/internet-of-things/">IBM Internet of Things Platform</a>
+      </div>
+    </div>
+  </footer>
+  <!-- End of footer -->    
+ 
     <!--  Scripts-->
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/materialize.js"></script>

@@ -1,0 +1,56 @@
+nav {
+ background-color: #3c4646 !important;
+}
+
+nav .brand-logo{
+ padding-left: 2%;
+ background-color: #3c4646 !important;  
+ font-family: 'Roboto', sans-serif !important;
+}
+
+.nav-wrapper img{
+    height: 64px;
+    padding-left: 1%;
+}
+
+body{
+  font-family: 'Roboto', sans-serif !important;
+}
+    
+
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px; 
+}
+
+
+footer.page-footer {
+  background-color: #fff;
+  /* inherit and override footer-copyright*/
+  margin: 0 0 0 0;
+  padding: 0 0 0 0; }
+  footer.page-footer .ibm-footer-copy-right-container {
+    background-color: #f9f9fb;
+    color: #959595;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    margin-bottom: -20px; }
+footer.page-footer .ibm-footer-copy-right-container {
+    background-color: #f9f9fb;
+    color: #959595;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    margin-bottom: -20px;
+    color: #959595;
+    height: 50px;
+    line-height: 50px; 
+}
+footer.page-footer .ibm-footer-copy-right-container a {
+      text-decoration: underline; 
+}    

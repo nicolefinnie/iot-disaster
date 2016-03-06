@@ -10,7 +10,9 @@
 		"express": "4.13.x",
 		"body-parser":"1.5.2",
 		"cfenv": "1.0.x",
-		"ibmiotf":"~0.2.11"	
+		"ibmiotf":"~0.2.11",
+		"chart.js":"*"
+		 
 	},
 	"repository": {},
 	"engines": {

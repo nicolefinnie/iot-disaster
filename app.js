@@ -13,12 +13,14 @@ var bodyParser = require('body-parser');
 
 // IBM IoT service
 var Client = require('ibmiotf').IotfApplication;
+var DeviceClient = require('ibmiotf').IotfDevice;
 
 // third-party twilio service
 var twilio = require('twilio');
 
 //file system library
 var fs = require('fs');
+
 
 // register server side express.js
 var twilioServer= require('./routes/twilioServer');
@@ -36,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
@@ -79,11 +82,23 @@ var iotAppConfig = {
     "auth-token" : iotConfig.credentials.apiToken
 }
 
-
 //Polar Snow's raspberryPi
 var polarSnowDeviceID = 'b827eb92cee9';
+// You can put your device ID in here if you want to use the device library
+var polarSnowDeviceToken = '';
+
+// only if you use the device library
+var iotDeviceConfig = {
+    "org" : iotConfig.credentials.org,
+    "id" : polarSnowDeviceID,
+    "type" : "raspberrypi",
+    "auth-method" : "token",
+    "auth-token" : polarSnowDeviceToken
+}
 
 var appClient = new Client(iotAppConfig);
+var deviceClient = new DeviceClient(iotDeviceConfig);
+
 appClient.connect();
 console.log("Successfully connected to our IoT service!");
 
@@ -97,10 +112,8 @@ appClient.on("connect", function () {
 var polarSnowSensor = {"payload":{}};
 var otherSensor = {"payload":{}};
 appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,payload){
-  //console.log("Device Event from :: "+deviceType+" : "+deviceId+" of event "+eventType+" with payload : "+payload);
-  if ( eventType === 'input' ){
+  if ( eventType === 'quakeSensor' ){
     if ( deviceId === polarSnowDeviceID ) {
-      console.log('Polarsnow wants to publish events to you. ' + payload);
       polarSnowSensor.payload = JSON.parse(payload);
     }
   } else {
@@ -108,14 +121,12 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
   }
 });
 
-app.post('/switchLight', raspberryPiServer.switchLight(appClient, polarSnowDeviceID));
 app.post('/message', twilioServer.sendMessage(twilio, twilioSid, twilioToken));
 app.get('/sensordata', raspberryPiServer.returnCurrentSensorData(polarSnowSensor));
-
+app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, polarSnowDeviceID));
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
-
 	// print a message when the server starts listening
   console.log("server starting on " + appEnv.url);
 });
