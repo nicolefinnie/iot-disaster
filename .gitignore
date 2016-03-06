@@ -4,3 +4,5 @@ vcap_service.json
 
 vcap_service_bluemix.json
 
+.pydevproject
+
