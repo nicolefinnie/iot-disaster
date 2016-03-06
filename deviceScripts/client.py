@@ -4,6 +4,7 @@ import os, json
 import ibmiotf.application
 import uuid
 import quakeSensor
+import motionSensor
 
 client = None
 
@@ -25,21 +26,26 @@ try:
     client.subscribeToDeviceEvents(event="earthquake")
 
     quakeStatus = False
+    motionStatus = False
     while True:
         quakeData = quakeSensor.sample()
         jsonQuakeData = json.dumps(quakeData)
         client.publishEvent("raspberrypi", options["deviceId"], "quakeSensor", "json", jsonQuakeData)
+        motionData = motionSensor.sample()
+        jsonMotionData = json.dumps(motionData)
+        client.publishEvent("raspberrypi", options["deviceId"], "motionSensor", "json", jsonMotionData)
         if quakeSensor.isPossibleQuake(quakeData):
-            quakeDetected = {'quakeDetected' : True}
-            client.publishEvent("raspberrypi", options["deviceId"], "quakeDetector", "json", quakeDetected)
             if quakeStatus == False:
                 print "WATCH OUT!!!!"
                 quakeStatus = True
         elif quakeStatus == True:
             print "All is calm, carry on."
             quakeStatus = False
+        if motionData['motionDetected'] != motionStatus:
+            motionStatus = motionData['motionDetected']
+            print "Change in motion detector status, motionDetected is now:", motionStatus
         time.sleep(0.5)
  
 except ibmiotf.ConnectionException  as e:
     print e
-
+    
