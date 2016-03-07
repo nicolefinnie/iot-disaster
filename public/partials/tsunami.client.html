@@ -1,0 +1,52 @@
+ <section>
+    <div class="ibm-widget card">
+              <div class="card-content">
+              <div class="card-title"><i class="material-icons">invert_colors</i>&nbsp;&nbsp;Tsunami sensors</div>
+                  <canvas id="tsunamiCanvas" height="370" width="700"></canvas>
+              </div>
+              <div class="card-action">
+                 <div class="row">
+                  <!-- minion Finnie -->
+                    <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minion}}> 
+                        <img src="images/freeMinionIcons/minion.png">
+                      </a>
+                    </div>
+                    <div class="col m2 s8">
+                       <a class="waves-effect waves-light btn-floating cyan-btn small-btn"></a>
+                    </div>
+                    <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionGirl}}> 
+                        <img src="images/freeMinionIcons/miniongirl.png">
+                      </a>
+                    </div>
+                    <div class="col m2 s8">
+                       <a class="waves-effect waves-light btn-floating green-btn small-btn"></a>
+                    </div>
+                    <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionOneEye}}> 
+                        <img src="images/freeMinionIcons/miniononeeye.png">
+                      </a>
+                    </div>
+                    <div class="col m2 s8">
+                       <a class="waves-effect waves-light btn-floating yellow-btn small-btn"></a>
+                    </div>
+                    <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionDuck}}> 
+                        <img src="images/freeMinionIcons/minionduck.png">
+                      </a>
+                    </div>
+                    <div class="col m2 s8">
+                       <a class="waves-effect waves-light btn-floating gray-btn small-btn"></a>
+                    </div>
+                </div>
+   
+        </div>
+    </div>
+    <script src="/scripts/chart.js/Chart.js"></script>
+    <script>initializePolarChart();
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+    </script>     
+</section>

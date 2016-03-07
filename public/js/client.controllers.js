@@ -5,6 +5,10 @@ var homeControllers = angular.module('HomeControllers', []);
 
 homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval', 
 function ($scope, $rootScope, $http, $interval) {
+  $scope.minion = minion;
+  $scope.minionGirl = minionGirl;
+  $scope.minionOneEye = minionOneEye;
+  $scope.minionDuck = minionDuck;
   $scope.sendQuakeAlert = function() {
     $http({
       method: 'GET',
@@ -102,23 +106,80 @@ function ($scope, $rootScope, $http, $interval) {
 }
 ]);
 
+function initializePolarChart(){
+  var canvas = document.getElementById('tsunamiCanvas');
+  ctx = canvas.getContext('2d');
+  var data = [
+              {
+                  value: 30,
+                  color:"rgba("+ cyan + ",0.5)",
+                  highlight: "rgba("+ cyan + ",1)",
+                  label: minion
+              },
+              {
+                  value: 5,
+                  color:"rgba("+ green + ",0.5)",
+                  highlight: "rgba("+ green + ",1)",
+                  label: minionGirl
+              },
+              {
+                  value: 10,
+                  color:"rgba("+ yellow + ",0.5)",
+                  highlight: "rgba("+ yellow + ",1)",
+                  label: minionOneEye
+              },
+              {
+                  value: 4,
+                  color:"rgba("+ gray + ",0.5)",
+                  highlight: "rgba("+ gray + ",1)",
+                  label: minionDuck
+              }
+          ];
+  
+  var clientsChart = new Chart(ctx).PolarArea(data,
+      {animationSteps: 100, 
+    scaleOverride : true,
+    scaleSteps : 6,
+    scaleStepWidth : 5,
+    scaleStartValue : 0, 
+    scaleShowVerticalLines: false,
+    pointDotRadius : 5,
+   
+    pointDot : false
+    });
+  
+  
+}
+
 function initializeBarChart(){
-  var canvas = document.getElementById('floodCanvas');
+  var canvas = document.getElementById('temperatureCanvas');
   ctx = canvas.getContext('2d');
   var barData = {
-      labels: ['Humidity'],
+      labels: ['Spring', 'Current', 'Summer', 'Autum', 'Winter'],
       datasets: [
           {
-              label: 'Finnie',
-              fillColor: "rgba(151,187,205,0.2)",
-              strokeColor: "rgba(151,187,205,1)",
-              data: [25]
-          },   
+              label: minion,
+              fillColor: "rgba("+ cyan + ",0.5)",
+              strokeColor: "rgba("+ cyan + ",0.8)",
+              data: [15, '', 30, 16, 10]
+          },
           {
-            label: 'Pradeep',
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            data: [20]
+            label: minionGirl,
+            fillColor: "rgba("+ green + ",0.5)",
+            strokeColor: "rgba("+ green + ",0.8)",
+            data: [19, '', 35, 18, 11]
+          },
+          {
+            label: minionOneEye,
+            fillColor: "rgba("+ yellow + ",0.5)",
+            strokeColor: "rgba("+ yellow + ",0.8)",
+            data: [16, '', 33, 19, 13]
+          },
+          {
+            label: minionDuck,
+            fillColor: "rgba("+ gray + ",0.5)",
+            strokeColor: "rgba("+ gray + ",0.8)",
+            data: [18, '', 36, 20, 14]
         }
       ]
   };
@@ -126,11 +187,12 @@ function initializeBarChart(){
   var clientsChart = new Chart(ctx).Bar(barData,
       {animationSteps: 15, 
     scaleOverride : true,
-    scaleSteps : 5,
+    scaleSteps : 4,
     scaleStepWidth : 10,
     scaleStartValue : 0, 
     scaleShowVerticalLines: false,
     pointDotRadius : 5,
+   
     pointDot : false
     });
   
@@ -147,37 +209,37 @@ function initializeLineChart(){
   startingData = {
     labels: ["", "", "", "", "", "", "", "","", ""],
     datasets: [
-          {
-             label: "Earthquake Threshold",
-             fillColor: "rgba(220,220,220,0.2)",
-             strokeColor: "rgba(220,220,220,1)",
-             data: quakeThreshold
-        },
+
         {
-            label: "Finnie's Nerdy Palace",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
+            label: minion,
+            fillColor: "rgba("+ cyan + ",0.2)",
+            strokeColor: "rgba("+ cyan + ",1)",
             data: quakeSamplePoints
         }, 
         {
-          label: "IBM Böblingen Lab",
-          fillColor: "rgba(153,204,0,0.2)",
-          strokeColor: "rgba(153,204,0,1)",
+          label: minionGirl,
+          fillColor: "rgba("+ green + ",0.2)",
+          strokeColor: "rgba("+ green + ",1)",
           data: quakeSamplePoints
       },
         {
-          label: "Kai's Kingdom",
-          fillColor: "rgba(255,255,0,0.2)",
-          strokeColor: "rgba(255,255,0,1)",
+          label: minionOneEye,
+          fillColor: "rgba("+ yellow + ",0.2)",
+          strokeColor: "rgba("+ yellow + ",1)",
           data: quakeSamplePoints
+      },
+      {
+        label: "Earthquake Threshold",
+        fillColor: "rgba("+ gray + ",0.2)",
+        strokeColor: "rgba("+ gray + ",0.5)",
+        data: quakeThreshold
       }
-        
     ]
   };
 
 //Reduce the animation steps for demo clarity.
 var myLiveChart = new Chart(ctx).Line(startingData, 
-    {animationSteps: 15, 
+    {animationSteps: 100, 
      scaleOverride : true,
      scaleSteps : 5,
      scaleStepWidth : 10,
@@ -196,7 +258,7 @@ setInterval(function(){
   
   // Update one of the points in the second dataset
   for (var i=0; i < startingData.labels.length; i++){
-    myLiveChart.datasets[1].points[i].value = quakeSamplePoints[i];
+    myLiveChart.datasets[0].points[i].value = quakeSamplePoints[i];
   }
   myLiveChart.update();
 

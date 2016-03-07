@@ -8,7 +8,9 @@
                <div class="row">
                    <!-- minion Liam -->
                     <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minion}}> 
                         <img src="images/freeMinionIcons/minion.png">
+                      </a>
                     </div>
                     <div class="col m5 s8">
                         <div class="switch">
@@ -24,7 +26,9 @@
                     </div>
                     <!-- minion Nicole -->
                     <div class="col m1 s4">
+                     <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionGirl}}> 
                         <img src="images/freeMinionIcons/miniongirl.png">
+                     </a>
                     </div>
                     <div class="col m5 s8">
                         <div class="switch">
@@ -42,7 +46,9 @@
               <!-- minion Kai -->
               <div class="row">
                     <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionOneEye}}> 
                         <img src="images/freeMinionIcons/miniononeeye.png">
+                      </a>
                     </div>
                     <div class="col m5 s8">
                         <div class="switch">
@@ -58,7 +64,9 @@
                     </div>
                      <!-- minion Pradeep & Shalini -->
                     <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionDuck}}> 
                         <img src="images/freeMinionIcons/minionduck.png">
+                      </a>
                     </div>
                     <div class="col m5 s8">
                         <div class="switch">
@@ -81,5 +89,9 @@
     <script src="js/googleMap.service.js"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp7zB3Ra5P8pSVC8-B-YZszN-LGjJvnRQ&callback=initMap">
+    </script>
+    <script> $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
     </script>
 </section>

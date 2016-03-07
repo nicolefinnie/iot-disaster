@@ -12,7 +12,7 @@ function initMap() {
   var settings = {
       zoom: 11,
       center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
       mapTypeControl: false,
       scrollwheel: false,
       draggable: true,
@@ -21,7 +21,8 @@ function initMap() {
                {"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},
                {"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},
                {"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},
-               {"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}],
+               {"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}
+               ],
       mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
       navigationControl: false,
       navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},            
@@ -41,21 +42,12 @@ function initMap() {
 function initializeMarkers(){
   
   //=== markers ==== 
-  var minionPos = new google.maps.LatLng(48.688725, 8.995648);
-  var minionGirlPos = new google.maps.LatLng(48.6660732, 9.0388024);
-  var minionOneEyePos = new google.maps.LatLng(48.7684932,9.153817);
-  var minionDuckPos = new google.maps.LatLng(48.66542,8.9891824);
-  var minionPurplePos = new google.maps.LatLng(48.755777, 8.882709);
+  var minionLocation = new google.maps.LatLng(minionPos.lat, minionPos.lng);
+  var minionGirlLocation = new google.maps.LatLng(minionGirlPos.lat, minionGirlPos.lng);
+  var minionOneEyeLocation = new google.maps.LatLng(minionOneEyePos.lat, minionOneEyePos.lng);
+  var minionDuckLocation = new google.maps.LatLng(minionDuckPos.lat, minionDuckPos.lng);
+  var minionPurpleLocation = new google.maps.LatLng(minionPurplePos.lat, minionPurplePos.lng);
   
- 
-  var infowindow = new google.maps.InfoWindow({
-      content: '<div><p>Save me!</p></div>'
-  });
-  
-  var infowindowGirl = new google.maps.InfoWindow({
-    content: '<div><p>I am a nerd!</p></div>'
-  });
-
 // resident minion
   var residentMinionImage = {
       url: 'images/freeMinionIcons/minion.png',
@@ -66,10 +58,10 @@ function initializeMarkers(){
     };
   
    residentMinionMarker = new google.maps.Marker({
-      position: minionPos,
+      position: minionLocation,
       map: map,
       draggable: true,
-      title: "Finnie's Nerdy Palace",
+      title: minion,
       icon: residentMinionImage,
       animation: google.maps.Animation.BOUNCE,
       zIndex: 3});
@@ -84,10 +76,10 @@ function initializeMarkers(){
     };
   
    residentMinionGirlMarker = new google.maps.Marker({
-    position: minionGirlPos,
+    position: minionGirlLocation,
     map: map,
     draggable: true,
-    title: "IBM Böblingen Lab",
+    title: minionGirl,
     icon: residentMinionGirlImage,
     zIndex: 3});
 
@@ -101,10 +93,10 @@ function initializeMarkers(){
     };
   
   residentMinionOneEyeMarker = new google.maps.Marker({
-    position: minionOneEyePos,
+    position: minionOneEyeLocation,
     map: map,
     draggable: true,
-    title: "Kai's Kingdom",
+    title: minionOneEye,
     icon: residentMinionOneEyeImage,
     zIndex: 3});
   
@@ -118,10 +110,10 @@ function initializeMarkers(){
     };
   
   residentMinionDuckMarker = new google.maps.Marker({
-    position: minionDuckPos,
+    position: minionDuckLocation,
     map: map,
     draggable: true,
-    title: "Pradeep's Castle",
+    title: minionDuck,
     icon: residentMinionDuckImage,
     animation: google.maps.Animation.DROP,
     zIndex: 3});
@@ -137,13 +129,32 @@ function initializeMarkers(){
     };
   
   var residentMinionPurpleMarker = new google.maps.Marker({
-    position: minionPurplePos,
+    position: minionPurpleLocation,
     map: map,
     draggable: true,
-    title: "Kepler's Town",
+    title: minionPurple,
     icon: residentMinionPurpleImage,
     zIndex: 3});
   
+  var infowindow = new google.maps.InfoWindow({
+    content: '<div><p>'+minionDialog+'</p></div>'
+  });
+  
+  var infowindowGirl = new google.maps.InfoWindow({
+    content: '<div><p>'+minionGirlDialog+'</p></div>'
+  });
+  
+  var infowindowOneEye = new google.maps.InfoWindow({
+    content: '<div><p>'+minionOneEyeDialog+'</p></div>'
+  });
+  
+  var infowindowDuck = new google.maps.InfoWindow({
+    content: '<div><p>'+minionDuckDialog+'</p></div>'
+  });
+  
+  var infowindowPurple = new google.maps.InfoWindow({
+    content: '<div><p>'+minionPurpleDialog+'</p></div>'
+  });
   
   google.maps.event.addListener(residentMinionMarker, 'click', function() {
       infowindow.open(map,residentMinionMarker);
@@ -152,5 +163,18 @@ function initializeMarkers(){
   google.maps.event.addListener(residentMinionGirlMarker, 'click', function() {
     infowindowGirl.open(map,residentMinionGirlMarker);
   });
+ 
+  google.maps.event.addListener(residentMinionOneEyeMarker, 'click', function() {
+    infowindowOneEye.open(map,residentMinionOneEyeMarker);
+  });
+
+  google.maps.event.addListener(residentMinionDuckMarker, 'click', function() {
+    infowindowDuck.open(map,residentMinionDuckMarker);
+  });
   
+  google.maps.event.addListener(residentMinionPurpleMarker, 'click', function() {
+    infowindowPurple.open(map,residentMinionPurpleMarker);
+  });
+  
+
 }

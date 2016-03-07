@@ -8,14 +8,17 @@
                  <div class="row">
                   <!-- minion Finnie -->
                     <div class="col m1 s4">
-                        <img src="images/freeMinionIcons/minion.png">
+                    <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minion}}> 
+                    <img src="images/freeMinionIcons/minion.png"></a>
                     </div>
                     <div class="col m5 s8">
                        <a class="waves-effect waves-light btn long-btn cyan-btn"></a>
                     </div>
                   <!-- minion Lab -->
                     <div class="col m1 s4">
+                      <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionGirl}}> 
                         <img src="images/freeMinionIcons/miniongirl.png">
+                      </a>
                     </div>
                     <div class="col m5 s8">
                       <a class="waves-effect waves-light btn long-btn green-btn"></a>
@@ -24,14 +27,28 @@
                 <!-- minion Kai -->
                 <div class="row">
                   <div class="col m1 s4">
+                   <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionOneEye}}> 
                       <img src="images/freeMinionIcons/miniononeeye.png">
+                   </a>
                   </div>
                   <div class="col m5 s8">
                     <a class="waves-effect waves-light btn long-btn yellow-btn"></a>
+                  </div>
+                  <div class="col m1 s4">
+                   <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionDuck}}> 
+                      <img src="images/freeMinionIcons/minionduck.png">
+                   </a>
+                  </div>
+                  <div class="col m5 s8">
+                      <p class="text-white">I have no quake sensor...</p>
                   </div>
                 </div>
         </div>
     </div>
     <script src="/scripts/chart.js/Chart.js"></script>
     <script>initializeLineChart();</script>     
+    <script> $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+    </script>
 </section>
