@@ -4,51 +4,20 @@
        <div class="col m12 s12"> 
        <div class="row">
          <div class="col m6 s12 ">
-          <div class="ibm-widget card">
-              <div class="card-content">
-              <div class="card-title"><i class="material-icons">settings_remote</i>&nbsp;&nbsp;Earthquake sensors</div>
-                  <canvas id="flugfeldCanvas" height="370" width="700"></canvas>
-                  <script src="/scripts/chart.js/Chart.js"></script>
-              </div>
-              <div class="card-action">
-                 <div class="row">
-                  <!-- minion Finnie -->
-                    <div class="col m1 s4">
-                        <img src="images/freeMinionIcons/minion.png">
-                    </div>
-                    <div class="col m5 s8">
-                       <a class="waves-effect waves-light btn cyan-btn"></a>
-                    </div>
-                  <!-- minion Lab -->
-                    <div class="col m1 s4">
-                        <img src="images/freeMinionIcons/miniongirl.png">
-                    </div>
-                    <div class="col m5 s8">
-                      <a class="waves-effect waves-light btn green-btn"></a>
-                    </div>
-                </div>
-                  <!-- minion Kai -->
-                  <div class="row">
-                    <div class="col m1 s4">
-                        <img src="images/freeMinionIcons/miniononeeye.png">
-                    </div>
-                    <div class="col m5 s8">
-                      <a class="waves-effect waves-light btn yellow-btn"></a>
-                    </div>
-                  </div>
-              </div>
-          </div>
+           <div ng-include src="'partials/quake.client.html'"></div>
           </div>
           <!-- END of earthquake sensors -->
         <div class="col m6 s12">
-            <div ng-include src="'partials/googlemap.client.html'"></div>
+            <div ng-include src="'partials/residentMap.client.html'"></div>
         </div>
+        </div>
+        <div class="row">
+        <div class="col m6 s12">
+            <div ng-include src="'partials/flood.client.html'"></div>
+        </div>
+        
      </div>
-    
   </div> 
-  
-</div>
-    
-    
+</div>   
 </section>
 

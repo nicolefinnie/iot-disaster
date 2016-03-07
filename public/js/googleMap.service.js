@@ -1,13 +1,14 @@
+var map;
+var residentMinionMarker;
+var residentMinionGirlMarker;
+var residentMinionOneEyeMarker;
+var residentMinionDuckMarker;
+
+
 function initMap() {
   // Google Maps  
   $('#map').addClass('loading');    
   var latlng = new google.maps.LatLng(48.71, 9.05); 
-  var minionPos = new google.maps.LatLng(48.688725, 8.995648);
-  var minionGirlPos = new google.maps.LatLng(48.6660732, 9.0388024);
-  var minionOneEyePos = new google.maps.LatLng(48.7684932,9.153817);
-  var minionDuckPos = new google.maps.LatLng(48.66542,8.9891824);
-  var minionPurplePos = new google.maps.LatLng(48.755777, 8.882709);
-  
   var settings = {
       zoom: 11,
       center: latlng,
@@ -25,7 +26,7 @@ function initMap() {
       navigationControl: false,
       navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},            
   };
-  var map = new google.maps.Map(document.getElementById("map"), settings);
+  map = new google.maps.Map(document.getElementById("map"), settings);
 
   google.maps.event.addDomListener(window, "resize", function() {
       var center = map.getCenter();
@@ -34,10 +35,27 @@ function initMap() {
       $('#map').removeClass('loading');
   });
 
+  initializeMarkers();
+}
+
+function initializeMarkers(){
+  
+  //=== markers ==== 
+  var minionPos = new google.maps.LatLng(48.688725, 8.995648);
+  var minionGirlPos = new google.maps.LatLng(48.6660732, 9.0388024);
+  var minionOneEyePos = new google.maps.LatLng(48.7684932,9.153817);
+  var minionDuckPos = new google.maps.LatLng(48.66542,8.9891824);
+  var minionPurplePos = new google.maps.LatLng(48.755777, 8.882709);
+  
+ 
   var infowindow = new google.maps.InfoWindow({
       content: '<div><p>Save me!</p></div>'
   });
   
+  var infowindowGirl = new google.maps.InfoWindow({
+    content: '<div><p>I am a nerd!</p></div>'
+  });
+
 // resident minion
   var residentMinionImage = {
       url: 'images/freeMinionIcons/minion.png',
@@ -47,12 +65,13 @@ function initMap() {
       scaledSize: new google.maps.Size(48, 48)
     };
   
-  var residentMinionMarker = new google.maps.Marker({
+   residentMinionMarker = new google.maps.Marker({
       position: minionPos,
       map: map,
       draggable: true,
       title: "Finnie's Nerdy Palace",
       icon: residentMinionImage,
+      animation: google.maps.Animation.BOUNCE,
       zIndex: 3});
 
   // resident minion girl 
@@ -64,7 +83,7 @@ function initMap() {
       scaledSize: new google.maps.Size(48, 48)
     };
   
-  var residentMinionGirlMarker = new google.maps.Marker({
+   residentMinionGirlMarker = new google.maps.Marker({
     position: minionGirlPos,
     map: map,
     draggable: true,
@@ -81,7 +100,7 @@ function initMap() {
       scaledSize: new google.maps.Size(48, 48)
     };
   
-  var residentMinionOneEyeMarker = new google.maps.Marker({
+  residentMinionOneEyeMarker = new google.maps.Marker({
     position: minionOneEyePos,
     map: map,
     draggable: true,
@@ -98,12 +117,13 @@ function initMap() {
       scaledSize: new google.maps.Size(48, 48)
     };
   
-  var residentMinionDuckMarker = new google.maps.Marker({
+  residentMinionDuckMarker = new google.maps.Marker({
     position: minionDuckPos,
     map: map,
     draggable: true,
     title: "Pradeep's Castle",
     icon: residentMinionDuckImage,
+    animation: google.maps.Animation.DROP,
     zIndex: 3});
   
   
@@ -124,24 +144,13 @@ function initMap() {
     icon: residentMinionPurpleImage,
     zIndex: 3});
   
+  
   google.maps.event.addListener(residentMinionMarker, 'click', function() {
       infowindow.open(map,residentMinionMarker);
   });
   
   google.maps.event.addListener(residentMinionGirlMarker, 'click', function() {
-    infowindow.open(map,residentMinionGirlMarker);
-  });
-  
-  google.maps.event.addListener(residentMinionOneEyeMarker, 'click', function() {
-    infowindow.open(map,residentMinionOneEyeMarker);
-  });
-  
-  google.maps.event.addListener(residentMinionDuckMarker, 'click', function() {
-    infowindow.open(map,residentMinionDuckMarker);
-  });
-  
-  google.maps.event.addListener(residentMinionPurpleMarker, 'click', function() {
-    infowindow.open(map,residentMinionPurpleMarker);
+    infowindowGirl.open(map,residentMinionGirlMarker);
   });
   
 }

@@ -110,21 +110,30 @@ footer.page-footer .ibm-footer-copy-right-container a {
     color: #3c4646; }
   
   .ibm-widget.card .card-action a.cyan-btn {
-    background-color: rgba(151,187,205,1);
+    background-color: rgba(151,187,205,0.8);
+   }
+  
+  .ibm-widget.card .card-action a.long-btn {
     height: 2px;
     width: 200px;
   }
   
+    .ibm-widget.card .card-action a.gray-btn {
+    background-color: rgba(220,220,220,0.8);
+  }
+  
+  .ibm-widget.card .card-action a.high-btn {
+    height: 40px;
+    width: 30px ;
+    padding: 0;
+  }
+  
   .ibm-widget.card .card-action a.green-btn {
-    background-color: rgba(153,204,0,1);
-    height: 2px;
-    width: 200px;
+    background-color: rgba(153,204,0,0.8);
   }
   
    
   .ibm-widget.card .card-action a.yellow-btn {
-    background-color: rgba(255,255,0,1);
-    height: 2px;
-    width: 200px;
+    background-color: rgba(255,255,0,0.8);
   } 
     

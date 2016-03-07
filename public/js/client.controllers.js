@@ -1,10 +1,10 @@
 /* Client side controllers - angularJS - HTML talks to these controllers */
 
+var quakeMagnitude = 0;
 var homeControllers = angular.module('HomeControllers', []);
 
-homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval',
+homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval', 
 function ($scope, $rootScope, $http, $interval) {
-  var quakeMagnitude = 0;
   $scope.sendQuakeAlert = function() {
     $http({
       method: 'GET',
@@ -57,7 +57,7 @@ function ($scope, $rootScope, $http, $interval) {
         if(Object.keys(myHouse.motionPayload).length > 0){
           var payload = JSON.parse(myHouse.motionPayload);
           if (myHouse.name === "polarsnow") {
-            $('#minionSwitch').prop('checked', payload.motionDetected);
+            $('#minionSwitch').prop('checked', payload.motionDetected);   
           }
         }
       
@@ -99,12 +99,50 @@ function ($scope, $rootScope, $http, $interval) {
   $scope.$on('$destroy', function() {
     $scope.stopPolling();
   });
+}
+]);
 
+function initializeBarChart(){
+  var canvas = document.getElementById('floodCanvas');
+  ctx = canvas.getContext('2d');
+  var barData = {
+      labels: ['Humidity'],
+      datasets: [
+          {
+              label: 'Finnie',
+              fillColor: "rgba(151,187,205,0.2)",
+              strokeColor: "rgba(151,187,205,1)",
+              data: [25]
+          },   
+          {
+            label: 'Pradeep',
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            data: [20]
+        }
+      ]
+  };
+  
+  var clientsChart = new Chart(ctx).Bar(barData,
+      {animationSteps: 15, 
+    scaleOverride : true,
+    scaleSteps : 5,
+    scaleStepWidth : 10,
+    scaleStartValue : 0, 
+    scaleShowVerticalLines: false,
+    pointDotRadius : 5,
+    pointDot : false
+    });
+  
+ 
 
+}
+
+function initializeLineChart(){
   var quakeThreshold = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25];
   var quakeSamplePoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   
-  var canvas = document.getElementById('flugfeldCanvas'),
+  var canvas = document.getElementById('quakeCanvas'),
   ctx = canvas.getContext('2d'),
   startingData = {
     labels: ["", "", "", "", "", "", "", "","", ""],
@@ -164,6 +202,5 @@ setInterval(function(){
 
   }
   , 500);
-}
-]);
 
+}
