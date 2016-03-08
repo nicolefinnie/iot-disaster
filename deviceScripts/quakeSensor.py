@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Only run on the raspberry pi
 import smbus
 import math
  

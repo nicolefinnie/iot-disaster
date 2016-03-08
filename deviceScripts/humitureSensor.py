@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# This is only run on Raspberry pi
 import Adafruit_DHT as DHT
 import RPi.GPIO as GPIO
 

@@ -1,4 +1,5 @@
 # This is only executed on the device client e.g. Raspberry Pi
+#!/usr/bin/python
 import time
 import os, json
 import ibmiotf.application
