@@ -82,15 +82,17 @@ var iotAppConfig = {
     "auth-token" : iotConfig.credentials.apiToken
 }
 
-//Polar Snow's raspberryPi
-var polarSnowDeviceID = 'b827eb92cee9';
+// Nicole's 'Snowy' raspberryPi
+var snowyDeviceID = 'b827eb92cee9';
+// Liam's 'hhbear' raspberryPi
+var hhbearDeviceID = 'b827eb80403e';
 // You can put your device ID in here if you want to use the device library
 var polarSnowDeviceToken = '';
 
 // only if you use the device library
 var iotDeviceConfig = {
     "org" : iotConfig.credentials.org,
-    "id" : polarSnowDeviceID,
+    "id" : snowyDeviceID,
     "type" : "raspberrypi",
     "auth-method" : "token",
     "auth-token" : polarSnowDeviceToken
@@ -110,7 +112,8 @@ appClient.on("connect", function () {
 
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
 var otherSensor = {"payload":{}};
-var allHouses = [{"name":"polarsnow", "deviceId":polarSnowDeviceID, "quakePayload":{}, "motionPayload":{}}];
+var allHouses = [{"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}},
+                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}}];
 
 
 appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,payload){
@@ -132,7 +135,7 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
 
 app.post('/message', twilioServer.sendMessage(twilio, twilioSid, twilioToken));
 app.get('/sensordata', raspberryPiServer.returnCurrentSensorData(allHouses));
-app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, polarSnowDeviceID));
+app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, snowyDeviceID));
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
