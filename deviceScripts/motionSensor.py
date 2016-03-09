@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Only run on the raspberry pi
 import RPi.GPIO as GPIO
 
