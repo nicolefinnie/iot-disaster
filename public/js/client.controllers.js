@@ -43,10 +43,17 @@ function ($scope, $rootScope, $http, $interval) {
     }).then(function successCallback(response) {
       response.data.forEach(function(myHouse){
         // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
+            quakeMagnitude[minionGirlQuakeIndex] = 4;
+            quakeMagnitude[minionQuakeIndex] = 8;
         if(Object.keys(myHouse.quakePayload).length > 0){
           var payload = JSON.parse(myHouse.quakePayload);
-          
-          quakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
+
+          var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
+          if (myHouse.name === "snowy") {
+            quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
+          } else if (myHouse.name === "hhbear") {
+            quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
+          } // else if (myHouse.name === "OTHER_DEVICE_NAME")
           // TODO 
           if (quakeMagnitude > 10) {
             //$scope.sendMessage();

@@ -1,6 +1,8 @@
 function initializeLineChart(){
   var quakeThreshold = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25];
-  var quakeSamplePoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var quakeSamplePoints = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
   
   var canvas = document.getElementById('quakeCanvas'),
   ctx = canvas.getContext('2d'),
@@ -12,19 +14,19 @@ function initializeLineChart(){
             label: minion,
             fillColor: "rgba("+ cyan + ",0.2)",
             strokeColor: "rgba("+ cyan + ",1)",
-            data: quakeSamplePoints
+            data: quakeSamplePoints[0]
         }, 
         {
           label: minionGirl,
           fillColor: "rgba("+ green + ",0.2)",
           strokeColor: "rgba("+ green + ",1)",
-          data: quakeSamplePoints
+          data: quakeSamplePoints[1]
       },
         {
           label: minionOneEye,
           fillColor: "rgba("+ yellow + ",0.2)",
           strokeColor: "rgba("+ yellow + ",1)",
-          data: quakeSamplePoints
+          data: quakeSamplePoints[2]
       },
       {
         label: "Earthquake Threshold",
@@ -50,15 +52,17 @@ var myLiveChart = new Chart(ctx).Line(startingData,
 
 setInterval(function(){
  
-  quakeSamplePoints.unshift(quakeMagnitude);
-  // get rid of the oldest earth quake reading
-  quakeSamplePoints.pop();
-  
-  // Update one of the points in the second dataset
-  for (var i=0; i < startingData.labels.length; i++){
-    myLiveChart.datasets[0].points[i].value = quakeSamplePoints[i];
+  for (var sensor = 0; sensor < numQuakeDetectors; sensor++ ) {
+    quakeSamplePoints[sensor].unshift(quakeMagnitude[sensor]);
+    // get rid of the oldest earth quake reading
+    quakeSamplePoints[sensor].pop();
+    
+    // Update one of the points in the second dataset
+    for (var i=0; i < startingData.labels.length; i++){
+      myLiveChart.datasets[sensor].points[i].value = quakeSamplePoints[sensor][i];
+    }
+    myLiveChart.update();
   }
-  myLiveChart.update();
 
   }
   , 500);
