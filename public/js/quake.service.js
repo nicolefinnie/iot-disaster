@@ -56,7 +56,6 @@ setInterval(function(){
     quakeSamplePoints[sensor].unshift(quakeMagnitude[sensor]);
     // get rid of the oldest earth quake reading
     quakeSamplePoints[sensor].pop();
-    
     // Update one of the points in the second dataset
     for (var i=0; i < startingData.labels.length; i++){
       myLiveChart.datasets[sensor].points[i].value = quakeSamplePoints[sensor][i];
