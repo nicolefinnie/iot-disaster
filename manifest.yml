@@ -2,7 +2,7 @@ applications:
 - path: .
   memory: 256M
   instances: 1
-  domain: eu-gb.mybluemix.net
-  name: iot-disaster
-  host: iot-disaster
+  domain: mybluemix.net
+  name: iot-envmonitor
+  host: iot-envmonitor
   disk_quota: 1024M
