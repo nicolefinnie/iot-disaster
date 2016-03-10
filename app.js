@@ -59,13 +59,13 @@ if (!baseConfig || Object.keys(baseConfig).length === 0) {
     }
   })
   configJSON["iotf-service"].forEach(function(entry) {
-    if (entry.name === 'iot-python') {
+    if (entry.name === 'iot-raspberrypi') {
       iotConfig = entry;
     }
   })  
 } else {
   twilioConfig = baseConfig['iot-twilio'];
-  iotConfig = baseConfig['iot-python'];
+  iotConfig = baseConfig['iot-raspberrypi'];
 }
 
 console.log('iot config is ' + JSON.stringify(iotConfig));
