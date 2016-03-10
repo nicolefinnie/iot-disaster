@@ -43,6 +43,7 @@ function ($scope, $rootScope, $http, $interval) {
     }).then(function successCallback(response) {
       response.data.forEach(function(myHouse){
         // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
+        // TODO: Mock data for now, until IOTF comes back online!
             quakeMagnitude[minionGirlQuakeIndex] = 4;
             quakeMagnitude[minionQuakeIndex] = 8;
         if(Object.keys(myHouse.quakePayload).length > 0){
