@@ -60,7 +60,9 @@ function ($scope, $rootScope, $http, $interval) {
         // switch on I'm home
         if(Object.keys(myHouse.motionPayload).length > 0){
           var payload = JSON.parse(myHouse.motionPayload);
-          if (myHouse.name === "polarsnow") {
+          if (myHouse.name === "snowy") {
+            $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
+          } else if (myHouse.name === "hhbear") {
             $('#minionSwitch').prop('checked', payload.motionDetected);   
           }
         }
