@@ -1,8 +1,15 @@
  <section>
     <div class="ibm-widget card">
-              <div class="card-content">
+              <div class="card-content" >
               <div class="card-title"><i class="material-icons">invert_colors</i>&nbsp;&nbsp;Tsunami sensors</div>
-                  <canvas id="tsunamiCanvas" height="370" width="700"></canvas>
+                  <div class="row" >
+                    <div class="col m6">
+                        <canvas id="humitureCanvas1" height="350"></canvas>
+                    </div>
+                    <div id="raindropCanvas" class="col m6">
+                        <canvas id="humitureCanvas2" height="350"></canvas>
+                    </div>
+                  </div>
               </div>
               <div class="card-action">
                  <div class="row">
@@ -13,7 +20,7 @@
                       </a>
                     </div>
                     <div class="col m2 s8">
-                       <a class="waves-effect waves-light btn-floating cyan-btn small-btn"></a>
+                        <p>sensor off</p>
                     </div>
                     <div class="col m1 s4">
                       <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionGirl}}> 
@@ -29,7 +36,7 @@
                       </a>
                     </div>
                     <div class="col m2 s8">
-                       <a class="waves-effect waves-light btn-floating yellow-btn small-btn"></a>
+                     <p>sensor off</p>
                     </div>
                     <div class="col m1 s4">
                       <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionDuck}}> 
@@ -37,7 +44,7 @@
                       </a>
                     </div>
                     <div class="col m2 s8">
-                       <a class="waves-effect waves-light btn-floating gray-btn small-btn"></a>
+                       <a class="waves-effect waves-light btn-floating green-btn small-btn"></a>
                     </div>
                 </div>
    
@@ -45,7 +52,7 @@
     </div>
     <script src="/scripts/chart.js/Chart.js"></script>
     <script src="js/tsunami.service.js"></script>
-    <script>initializePolarChart();
+    <script>initializePieChart();
     $(document).ready(function(){
       $('.tooltipped').tooltip({delay: 50});
     });

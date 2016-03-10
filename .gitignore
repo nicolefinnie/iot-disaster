@@ -1,8 +1,9 @@
 node_modules
 # ignore Bluemix VCAP_SERVICES environment variables
 vcap_service.json
-
+vcap_service.uk.json
 vcap_service_bluemix.json
 
+manifest.yml
 .pydevproject
 

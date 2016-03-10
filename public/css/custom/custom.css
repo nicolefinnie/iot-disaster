@@ -3,22 +3,27 @@
 nav {
  background-color: #3A4B54 !important;
  height: 100px !important;
-}
-
-nav .brand-logo{
- padding-left: 2%;
- background-color: #3A4B54 !important;  
  font-family: 'Roboto', sans-serif !important;
- height: 100px;
+ 
 }
 
-nav .brand-logo h5{
- padding-top: 5%;
+nav h5{
+ padding-top: 1%;
+ padding-left: 5%;
 }
-
+nav h6
+{
+ padding-left: 5%;
+}
 .nav-wrapper img{
     height: 100px;
     padding-left: 1%;
+}
+.nav-wrapper img.small{
+    margin-top: 15px;
+    height: 64px;
+    padding-left: 0 !important;
+    margin-left: -50px;
 }
 
 body{
@@ -62,6 +67,7 @@ footer.page-footer .ibm-footer-copy-right-container a {
       text-decoration: underline; 
 }    
 
+}
 #map {
  display: block;
     width: 100%;
@@ -136,8 +142,10 @@ footer.page-footer .ibm-footer-copy-right-container a {
     background-color: rgba(75,132,0,0.8);
   }
   
-   
   .ibm-widget.card .card-action a.yellow-btn {
     background-color: rgba(253,214,0,0.8);
   } 
     
+  #raindropCanvas{
+    background-image: url('../../images/rain.gif');
+  }

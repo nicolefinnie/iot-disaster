@@ -5,6 +5,7 @@ var cyan = "151,187,205";
 var green = "75,132,0";
 var yellow = "253,214,0";
 var gray = "174,174,174";
+var blue = "21,41,53";
 
 // === Minion's places ===
 var minion = "Finnie's Nerdy Palace";
@@ -35,3 +36,10 @@ var minionDuckQuakeIndex = 3;
 
 var numQuakeDetectors = 3;
 var quakeMagnitude = [0,0,0];
+
+var numTemperatureDetectors = 2;
+var numHumitureDetector = 2;
+var numRaindropDetector = 1;
+var temperatureReadings = [1, 1];
+var humitureReadings = [1, 1];
+var raindropReadings = [false];

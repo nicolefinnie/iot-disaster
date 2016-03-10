@@ -1,44 +1,51 @@
 
-function initializePolarChart(){
-  var canvas = document.getElementById('tsunamiCanvas');
-  ctx = canvas.getContext('2d');
-  var data = [
-              {
-                  value: 30,
-                  color:"rgba("+ cyan + ",0.5)",
-                  highlight: "rgba("+ cyan + ",1)",
-                  label: minion
-              },
-              {
-                  value: 5,
-                  color:"rgba("+ green + ",0.5)",
-                  highlight: "rgba("+ green + ",1)",
-                  label: minionGirl
-              },
-              {
-                  value: 10,
-                  color:"rgba("+ yellow + ",0.5)",
-                  highlight: "rgba("+ yellow + ",1)",
-                  label: minionOneEye
-              },
-              {
-                  value: 4,
-                  color:"rgba("+ gray + ",0.5)",
-                  highlight: "rgba("+ gray + ",1)",
-                  label: minionDuck
-              }
+function initializePieChart(){
+    var data1 = [
+            {
+              value: 30,
+              color: "rgba("+cyan+",0.8)",
+              highlight: "rgba("+cyan+",1)",
+              label: "Humiture"
+                
+            },
+            {
+              value: 70,
+              color: "rgba("+cyan+",0.1)",
+              highlight: "rgba("+cyan+",0.5)",
+              label: "Full humiture"
+            }
           ];
+    
+    var data2 = [
+                 {
+                   value: 35,
+                   color: "rgba("+gray+",0.8)",
+                   highlight: "rgba("+gray+",1)",
+                   label: "Humiture"
+                     
+                 },
+                 {
+                   value: 65,
+                   color: "rgba("+gray+",0.1)",
+                   highlight: "rgba("+gray+",0.5)",
+                   label: "Full humiture"
+                 }
+               ];
   
-  var clientsChart = new Chart(ctx).PolarArea(data,
+  var doughnutChart1 = new Chart(document.getElementById('humitureCanvas1').getContext('2d')).Doughnut(data1,
       {animationSteps: 100, 
     scaleOverride : true,
     scaleSteps : 6,
     scaleStepWidth : 5,
-    scaleStartValue : 0, 
-    scaleShowVerticalLines: false,
-    pointDotRadius : 5,
-   
-    pointDot : false
+    scaleStartValue : 0
+    });
+  
+  var doughnutChart2 = new Chart(document.getElementById('humitureCanvas2').getContext('2d')).Doughnut(data2,
+      {animationSteps: 100, 
+    scaleOverride : true,
+    scaleSteps : 6,
+    scaleStepWidth : 5,
+    scaleStartValue : 0
     });
   
   
