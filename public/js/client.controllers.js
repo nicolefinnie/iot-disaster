@@ -1,6 +1,5 @@
 /* Client side controllers - angularJS - HTML talks to these controllers */
 
-var quakeMagnitude = 0;
 var homeControllers = angular.module('HomeControllers', []);
 
 homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval', 
@@ -44,10 +43,16 @@ function ($scope, $rootScope, $http, $interval) {
     }).then(function successCallback(response) {
       response.data.forEach(function(myHouse){
         // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
+        // TODO: Mock data for now, until IOTF comes back online!
         if(Object.keys(myHouse.quakePayload).length > 0){
           var payload = JSON.parse(myHouse.quakePayload);
-          
-          quakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
+
+          var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
+          if (myHouse.name === "snowy") {
+            quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
+          } else if (myHouse.name === "hhbear") {
+            quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
+          } // else if (myHouse.name === "OTHER_DEVICE_NAME")
           // TODO 
           if (quakeMagnitude > 10) {
             //$scope.sendMessage();
@@ -108,163 +113,3 @@ function ($scope, $rootScope, $http, $interval) {
 }
 ]);
 
-function initializePolarChart(){
-  var canvas = document.getElementById('tsunamiCanvas');
-  ctx = canvas.getContext('2d');
-  var data = [
-              {
-                  value: 30,
-                  color:"rgba("+ cyan + ",0.5)",
-                  highlight: "rgba("+ cyan + ",1)",
-                  label: minion
-              },
-              {
-                  value: 5,
-                  color:"rgba("+ green + ",0.5)",
-                  highlight: "rgba("+ green + ",1)",
-                  label: minionGirl
-              },
-              {
-                  value: 10,
-                  color:"rgba("+ yellow + ",0.5)",
-                  highlight: "rgba("+ yellow + ",1)",
-                  label: minionOneEye
-              },
-              {
-                  value: 4,
-                  color:"rgba("+ gray + ",0.5)",
-                  highlight: "rgba("+ gray + ",1)",
-                  label: minionDuck
-              }
-          ];
-  
-  var clientsChart = new Chart(ctx).PolarArea(data,
-      {animationSteps: 100, 
-    scaleOverride : true,
-    scaleSteps : 6,
-    scaleStepWidth : 5,
-    scaleStartValue : 0, 
-    scaleShowVerticalLines: false,
-    pointDotRadius : 5,
-   
-    pointDot : false
-    });
-  
-  
-}
-
-function initializeBarChart(){
-  var canvas = document.getElementById('temperatureCanvas');
-  ctx = canvas.getContext('2d');
-  var barData = {
-      labels: ['Spring', 'Current', 'Summer', 'Autum', 'Winter'],
-      datasets: [
-          {
-              label: minion,
-              fillColor: "rgba("+ cyan + ",0.5)",
-              strokeColor: "rgba("+ cyan + ",0.8)",
-              data: [15, '', 30, 16, 10]
-          },
-          {
-            label: minionGirl,
-            fillColor: "rgba("+ green + ",0.5)",
-            strokeColor: "rgba("+ green + ",0.8)",
-            data: [19, '', 35, 18, 11]
-          },
-          {
-            label: minionOneEye,
-            fillColor: "rgba("+ yellow + ",0.5)",
-            strokeColor: "rgba("+ yellow + ",0.8)",
-            data: [16, '', 33, 19, 13]
-          },
-          {
-            label: minionDuck,
-            fillColor: "rgba("+ gray + ",0.5)",
-            strokeColor: "rgba("+ gray + ",0.8)",
-            data: [18, '', 36, 20, 14]
-        }
-      ]
-  };
-  
-  var clientsChart = new Chart(ctx).Bar(barData,
-      {animationSteps: 15, 
-    scaleOverride : true,
-    scaleSteps : 4,
-    scaleStepWidth : 10,
-    scaleStartValue : 0, 
-    scaleShowVerticalLines: false,
-    pointDotRadius : 5,
-   
-    pointDot : false
-    });
-  
- 
-
-}
-
-function initializeLineChart(){
-  var quakeThreshold = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25];
-  var quakeSamplePoints = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  
-  var canvas = document.getElementById('quakeCanvas'),
-  ctx = canvas.getContext('2d'),
-  startingData = {
-    labels: ["", "", "", "", "", "", "", "","", ""],
-    datasets: [
-
-        {
-            label: minion,
-            fillColor: "rgba("+ cyan + ",0.2)",
-            strokeColor: "rgba("+ cyan + ",1)",
-            data: quakeSamplePoints
-        }, 
-        {
-          label: minionGirl,
-          fillColor: "rgba("+ green + ",0.2)",
-          strokeColor: "rgba("+ green + ",1)",
-          data: quakeSamplePoints
-      },
-        {
-          label: minionOneEye,
-          fillColor: "rgba("+ yellow + ",0.2)",
-          strokeColor: "rgba("+ yellow + ",1)",
-          data: quakeSamplePoints
-      },
-      {
-        label: "Earthquake Threshold",
-        fillColor: "rgba("+ gray + ",0.2)",
-        strokeColor: "rgba("+ gray + ",0.5)",
-        data: quakeThreshold
-      }
-    ]
-  };
-
-//Reduce the animation steps for demo clarity.
-var myLiveChart = new Chart(ctx).Line(startingData, 
-    {animationSteps: 100, 
-     scaleOverride : true,
-     scaleSteps : 5,
-     scaleStepWidth : 10,
-     scaleStartValue : 0, 
-     scaleShowVerticalLines: false,
-     pointDotRadius : 5,
-     pointDot : false
-     });
-
-
-setInterval(function(){
- 
-  quakeSamplePoints.unshift(quakeMagnitude);
-  // get rid of the oldest earth quake reading
-  quakeSamplePoints.pop();
-  
-  // Update one of the points in the second dataset
-  for (var i=0; i < startingData.labels.length; i++){
-    myLiveChart.datasets[0].points[i].value = quakeSamplePoints[i];
-  }
-  myLiveChart.update();
-
-  }
-  , 500);
-
-}

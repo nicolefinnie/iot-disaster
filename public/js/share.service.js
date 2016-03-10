@@ -26,3 +26,12 @@ var minionGirlDialog = "I'm a nerd...";
 var minionOneEyeDialog = "I have a monocle.";
 var minionDuckDialog = "I have a duck inner tube.";
 var minionPurpleDialog = "Ahhhhhhh!!!!";
+
+//== for quake service ==
+var minionQuakeIndex = 0;
+var minionGirlQuakeIndex = 1;
+var minionOneEyeQuakeIndex = 2;
+var minionDuckQuakeIndex = 3;
+
+var numQuakeDetectors = 3;
+var quakeMagnitude = [0,0,0];
