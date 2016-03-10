@@ -88,14 +88,20 @@ var snowyDeviceID = 'b827eb92cee9';
 var hhbearDeviceID = 'b827eb80403e';
 // You can put your device ID in here if you want to use the device library
 var polarSnowDeviceToken = '';
+// Pradeep's 'Squirrel' raspberryPi 
+//Need changes here !
+var squirrelDeviceID ='b827eb930823';
+// Pradeep's Device token
+var squirrelDeviceToken = 's9YegBi@NvRlzJedf+';
+
 
 // only if you use the device library
 var iotDeviceConfig = {
     "org" : iotConfig.credentials.org,
-    "id" : snowyDeviceID,
+    "id" : squirrelDeviceID,
     "type" : "raspberrypi",
     "auth-method" : "token",
-    "auth-token" : polarSnowDeviceToken
+    "auth-token" : squirrelDeviceToken
 }
 
 var appClient = new Client(iotAppConfig);
@@ -113,7 +119,8 @@ appClient.on("connect", function () {
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
 var otherSensor = {"payload":{}};
 var allHouses = [{"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}},
-                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}}];
+                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}},
+                 {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}}];
 
 
 appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,payload){
@@ -124,6 +131,14 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
       } 
       else if (eventType === 'motionSensor'){
         myHouse.motionPayload = JSON.parse(payload);
+      }
+      else if (eventType ==='humitureSensor'){
+    	myHouse.humiturePayload = JSON.parse(payload);
+    	console.log('The humiture sensor data is'+JSON.parse(payload));
+      }
+      else if (eventType ==='rainSensor'){
+    	myHouse.rainSensor = JSON.parse(payload);   
+    	console.log('The rain sensor data is'+JSON.parse(payload));
       }
       else {
         console.log('Got other events of ' + eventType + ' from ' + deviceId);
