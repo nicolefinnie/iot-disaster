@@ -48,7 +48,7 @@ var iotConfig, twilioConfig;
 
 //Loop through user-provided config info and pull out our Twilio credentials
 var twilioSid, twilioToken;
-var baseConfig = appEnv.getServices('iot-python');
+var baseConfig = appEnv.getServices('iot-raspberrypi');
 
 //local vcap_service.json ported from Bluemix, but the vcap_service stored in Bluemix is actually different than it provides, that sucks!
 if (!baseConfig || Object.keys(baseConfig).length === 0) {
