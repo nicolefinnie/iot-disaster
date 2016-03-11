@@ -121,10 +121,10 @@ appClient.on("connect", function () {
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
 var otherSensor = {"payload":{}};
 var allHouses = [{"name":"alerts","quakeAlert":false, "humidityAlert":false, "motionAlert": false, "rainAlert":false},
-                 {"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
-                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
-                 {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}, "myQuakeMagnitude":0},
-                 {"name":"snail","deviceId":snailDeviceID,"quakePayload":{},"motionPayload":{}, "myQuakeMagnitude":0}
+                 {"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":-1},
+                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":-1},
+                 {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}, "myQuakeMagnitude":-1},
+                 {"name":"snail","deviceId":snailDeviceID,"quakePayload":{},"motionPayload":{}, "myQuakeMagnitude":-1}
                  ];
 allHouses.isQuake = false;
 
@@ -150,11 +150,11 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
     	console.log('The rain sensor data is'+JSON.parse(payload));
       }
       else {
-        console.log('Got other events of ' + eventType + ' from ' + deviceId);
+//        console.log('Got other events of ' + eventType + ' from ' + deviceId);
       } 
     }
     // aggregate temp total quake magnitude 
-    if (myHouse.myQuakeMagnitude !== undefined){
+    if (myHouse.myQuakeMagnitude !== -1){
       nbrOfDevices = nbrOfDevices + 1;
       totalQuakeMag = totalQuakeMag + myHouse.myQuakeMagnitude;
     }
