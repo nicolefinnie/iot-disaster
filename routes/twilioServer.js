@@ -9,11 +9,11 @@ exports.sendMessage = function(twilio, twilioSid, twilioToken){
     
     var client = new twilio.RestClient(twilioSid, twilioToken);
     client.sendMessage({
-        to: req.body.phoneNumber,
-        from: '+4915735993514',
-        body: req.body.message
+        to: '+4915170002048',
+        from: '+4915735994570',
+        body: 'WAKE UP PLEASE'
     }, function(err, message) {
-        res.send('Message sent! ID: '+message.sid);
+        res.send('Message sent! ID: '+ JSON.stringify(message));
     });
     
   };

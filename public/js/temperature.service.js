@@ -25,8 +25,8 @@ function initializeBarChart(){
           },
           {
             label: minionDuck,
-            fillColor: "rgba("+ yellow + ",0.5)",
-            strokeColor: "rgba("+ yellow + ",0.8)",
+            fillColor: "rgba("+ gray + ",0.5)",
+            strokeColor: "rgba("+ gray + ",0.8)",
             data: ['', 26, '']
         }
       ]

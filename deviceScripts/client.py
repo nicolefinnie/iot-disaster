@@ -17,7 +17,7 @@ def myEarthquakeAlert(cmd):
         print command
         if command == "alert":
                 if os.path.isfile('music/imperialMarch.mp3'):
-                        os.system('mpg321 -n 1000 music/imperialMarch.mp3')
+                        os.system('mpg321 -n 1000 music/imperialMarch.mp3&')
                 else:
                         print "Receive alerts from IoT, but no music file is found"
 

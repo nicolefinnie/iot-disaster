@@ -41,6 +41,7 @@ function ($scope, $rootScope, $http, $interval) {
 	  if ($scope.toastState !== input && input === true) {
 		  var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
 		  $scope.sendQuakeAlert();
+		  $scope.sendMessage();
           Materialize.toast($toastContent, 5000);
 	  }
 	  $scope.toastState = input;
