@@ -55,7 +55,7 @@ function ($scope, $rootScope, $http, $interval) {
               quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
             } // else if (myHouse.name === "OTHER_DEVICE_NAME")
             // TODO 
-            if (quakeMagnitude > 10) {
+            if (myQuakeMagnitude > 10) {
               //$scope.sendMessage();
               //$scope.sendQuakeAlert();
               var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
