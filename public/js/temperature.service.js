@@ -44,4 +44,12 @@ function initializeBarChart(){
     pointDot : false
     });
   
+  setInterval(function(){
+    for (var sensor = 0; sensor < numTemperatureDetectors; sensor++ ) {
+      clientsChart.datasets[sensor].bars[1].value = temperatureReadings[sensor];
+      clientsChart.update();
+    }
+    }
+    , 500);
+  
 }

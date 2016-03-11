@@ -29,7 +29,7 @@ function ($scope, $rootScope, $http, $interval) {
       url: '/message',
       data: msgData
     }).then(function successCallback(response) {
-       console.log("successfully sent text");
+       console.log("successfully sent text " + JSON.stringify(response));
     }, function errorCallback(response) {
         console.log("failed to send text");
     });
@@ -45,6 +45,7 @@ function ($scope, $rootScope, $http, $interval) {
 	  $scope.toastState = input;
   }
   
+
    // Set of all tasks that should be performed periodically
   $scope.runIntervalTasks = function() {
   
@@ -84,6 +85,36 @@ function ($scope, $rootScope, $http, $interval) {
             } else if (myHouse.name === "snail") {
               $('#minionOneEyeSwitch').prop('checked', payload.motionDetected);
             }
+          }
+        }
+        
+        if(myHouse.humiturePayload !==undefined) {
+          if(Object.keys(myHouse.humiturePayload).length > 0) {
+              var payload = JSON.parse(myHouse.humiturePayload);
+              if(myHouse.name == "squirrel") {
+                  humidReadings[minionDuckQuakeIndex] = payload.humid;
+                  temperatureReadings[minionDuckQuakeIndex] = payload.temp;
+               
+              }
+              else if(myHouse.name == "snowy") {
+                  humidReadings[minionGirlQuakeIndex] = payload.humid;
+                  temperatureReadings[minionGirlQuakeIndex] = payload.temp;
+              }
+
+          }
+        }
+        // rain drop
+        if(myHouse.rainPayload !== undefined) {
+          if(Object.keys(myHouse.rainPayload).length > 0) {
+            var payload = JSON.parse(myHouse.rainPayload);
+            console.log(' rain payload ' + JSON.stringify(payload));
+              if(myHouse.name == "squirrel") {
+                  //It's just Pradeep's house here !
+                  //raindropReadings[minionDuckQuakeIndex] = payload.rainDetected;
+                $scope.raindrop = payload.rainDetected === 0 ? true : false;
+                console.log('Rain drop ' + payload.rainDetected);
+               
+              }
           }
         }
         

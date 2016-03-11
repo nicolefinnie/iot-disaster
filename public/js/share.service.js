@@ -37,9 +37,13 @@ var minionDuckQuakeIndex = 3;
 var numQuakeDetectors = 3;
 var quakeMagnitude = [0,0,0];
 
-var numTemperatureDetectors = 2;
+
+var numQuakeDetectors = 3;
+var numTemperatureDetectors = 4;
 var numHumitureDetector = 2;
 var numRaindropDetector = 1;
-var temperatureReadings = [1, 1];
-var humitureReadings = [1, 1];
-var raindropReadings = [false];
+
+var quakeMagnitude = [0,0,0,0];
+var temperatureReadings = [0,0,0,0];
+var humidReadings = [0,0,0,0];
+var raindropReadings = [false, false, false, false];

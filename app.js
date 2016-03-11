@@ -121,7 +121,7 @@ appClient.on("connect", function () {
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
 var otherSensor = {"payload":{}};
 var allHouses = [{"name":"alerts","quakeAlert":false, "humidityAlert":false, "motionAlert": false, "rainAlert":false},
-                 {"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
+                 {"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}, "humiturePayload":{}, "myQuakeMagnitude":0},
                  {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
                  {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}, "myQuakeMagnitude":0},
                  {"name":"snail","deviceId":snailDeviceID,"quakePayload":{},"motionPayload":{}, "myQuakeMagnitude":0}
@@ -143,14 +143,14 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
       }
       else if (eventType ==='humitureSensor'){
     	myHouse.humiturePayload = JSON.parse(payload);
-    	console.log('The humiture sensor data is'+JSON.parse(payload));
+    	//console.log('The humiture sensor data is'+JSON.parse(payload));
       }
       else if (eventType ==='rainSensor'){
-    	myHouse.rainSensor = JSON.parse(payload);   
+    	myHouse.rainPayload = JSON.parse(payload);   
     	console.log('The rain sensor data is'+JSON.parse(payload));
       }
       else {
-//        console.log('Got other events of ' + eventType + ' from ' + deviceId);
+        //console.log('Got other events of ' + eventType + ' from ' + deviceId + ':' + JSON.stringify(payload));
       } 
     }
     // aggregate temp total quake magnitude 
