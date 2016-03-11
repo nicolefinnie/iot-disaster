@@ -162,7 +162,8 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
   // calc avg quakeMagnitude and if above threshold, send alert
   if (nbrOfDevices !== 0) {
 	  var avgQuakeMag = totalQuakeMag / nbrOfDevices;
-	  if (avgQuakeMag > 10) {
+      console.log("Quake data: avg - " +  avgQuakeMag +" total - " + totalQuakeMag + " nbrdevices - " + nbrOfDevices);
+	  if ((avgQuakeMag > 40) && (nbrOfDevices > 1)) {
 		if (allHouses[0].quakeAlert === false) {
 			console.log("Quake data changed! Quake detected! Data: avg - " +  avgQuakeMag +" total - " + totalQuakeMag + " nbrdevices - " + nbrOfDevices);
 		}
