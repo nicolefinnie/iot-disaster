@@ -150,7 +150,7 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
     	console.log('The rain sensor data is'+JSON.parse(payload));
       }
       else {
-        console.log('Got other events of ' + eventType + ' from ' + deviceId);
+//        console.log('Got other events of ' + eventType + ' from ' + deviceId);
       } 
     }
     // aggregate temp total quake magnitude 
