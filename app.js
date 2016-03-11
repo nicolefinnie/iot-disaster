@@ -154,7 +154,7 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
       } 
     }
     // aggregate temp total quake magnitude 
-    if (myHouse.myQuakeMagnitude !== undefined){
+    if (myHouse.myQuakeMagnitude !== undefined && myHouse.myQuakeMagnitude > 5){
       nbrOfDevices = nbrOfDevices + 1;
       totalQuakeMag = totalQuakeMag + myHouse.myQuakeMagnitude;
     }
