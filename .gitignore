@@ -5,6 +5,6 @@ vcap_service.us.json
 vcap_service.uk.json
 vcap_service_bluemix.json
 
-manifest.yml
+
 .pydevproject
 
