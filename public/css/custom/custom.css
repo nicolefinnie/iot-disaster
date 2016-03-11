@@ -146,6 +146,6 @@ footer.page-footer .ibm-footer-copy-right-container a {
     background-color: rgba(253,214,0,0.8);
   } 
     
-  #raindropCanvas{
+  .ibm-rain {
     background-image: url('../../images/rain.gif');
   }

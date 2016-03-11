@@ -4,6 +4,7 @@ var homeControllers = angular.module('HomeControllers', []);
 
 homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval', 
 function ($scope, $rootScope, $http, $interval) {
+  $scope.raindrop = false;
   $scope.minion = minion;
   $scope.minionGirl = minionGirl;
   $scope.minionOneEye = minionOneEye;
@@ -43,35 +44,37 @@ function ($scope, $rootScope, $http, $interval) {
     }).then(function successCallback(response) {
       response.data.forEach(function(myHouse){
         // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
-        // TODO: Mock data for now, until IOTF comes back online!
-        if(Object.keys(myHouse.quakePayload).length > 0){
-          var payload = JSON.parse(myHouse.quakePayload);
-
-          var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
-          if (myHouse.name === "snowy") {
-            quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
-          } else if (myHouse.name === "hhbear") {
-            quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
-          } // else if (myHouse.name === "OTHER_DEVICE_NAME")
-          // TODO 
-          if (quakeMagnitude > 10) {
-            //$scope.sendMessage();
-            //$scope.sendQuakeAlert();
-            var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
-            Materialize.toast($toastContent, 1000);
+        if (myHouse.quakePayload !== undefined) {
+          if(Object.keys(myHouse.quakePayload).length > 0){
+            var payload = JSON.parse(myHouse.quakePayload);
+  
+            var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
+            if (myHouse.name === "snowy") {
+              quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
+            } else if (myHouse.name === "hhbear") {
+              quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
+            } // else if (myHouse.name === "OTHER_DEVICE_NAME")
+            // TODO 
+            if (quakeMagnitude > 10) {
+              //$scope.sendMessage();
+              //$scope.sendQuakeAlert();
+              var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
+              Materialize.toast($toastContent, 1000);
+            }
+          }
+        }   
+        if (myHouse.motionPayload !== undefined) {
+          // switch on I'm home
+          if(Object.keys(myHouse.motionPayload).length > 0){
+            var payload = JSON.parse(myHouse.motionPayload);
+            if (myHouse.name === "snowy") {
+              $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
+            } else if (myHouse.name === "hhbear") {
+              $('#minionSwitch').prop('checked', payload.motionDetected);   
+            }
           }
         }
-      
-        // switch on I'm home
-        if(Object.keys(myHouse.motionPayload).length > 0){
-          var payload = JSON.parse(myHouse.motionPayload);
-          if (myHouse.name === "snowy") {
-            $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
-          } else if (myHouse.name === "hhbear") {
-            $('#minionSwitch').prop('checked', payload.motionDetected);   
-          }
-        }
-      
+        
       });
       
       
