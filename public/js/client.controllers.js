@@ -35,6 +35,16 @@ function ($scope, $rootScope, $http, $interval) {
     });
   };
   
+  // this is a timer that prevents toasts to be spammed
+  $scope.toastState = false;
+  var toastIfNewQuakeDetected = function(input){
+	  if ($scope.toastState !== input && input === true) {
+		  var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
+          Materialize.toast($toastContent, 1000);
+	  }
+	  $scope.toastState = input;
+  }
+  
    // Set of all tasks that should be performed periodically
   $scope.runIntervalTasks = function() {
   
@@ -42,25 +52,25 @@ function ($scope, $rootScope, $http, $interval) {
       method: 'GET',
       url: '/sensordata'
     }).then(function successCallback(response) {
+    	
+      var isQuake = response.data[0].quakeAlert;
+      toastIfNewQuakeDetected(isQuake);
+      
       response.data.forEach(function(myHouse){
+    	
         // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
         if (myHouse.quakePayload !== undefined) {
           if(Object.keys(myHouse.quakePayload).length > 0){
-            var payload = JSON.parse(myHouse.quakePayload);
+            var payload = myHouse.quakePayload;
   
             var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
             if (myHouse.name === "snowy") {
               quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
             } else if (myHouse.name === "hhbear") {
               quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
-            } // else if (myHouse.name === "OTHER_DEVICE_NAME")
-            // TODO 
-            if (myQuakeMagnitude > 10) {
-              //$scope.sendMessage();
-              //$scope.sendQuakeAlert();
-              var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
-              Materialize.toast($toastContent, 1000);
-            }
+            } else if (myHouse.name === "snail") {
+              quakeMagnitude[minionOneEyeQuakeIndex] = myQuakeMagnitude;
+            }// else if (myHouse.name === "OTHER_DEVICE_NAME")
           }
         }   
         if (myHouse.motionPayload !== undefined) {
@@ -71,6 +81,8 @@ function ($scope, $rootScope, $http, $interval) {
               $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
             } else if (myHouse.name === "hhbear") {
               $('#minionSwitch').prop('checked', payload.motionDetected);   
+            } else if (myHouse.name === "snail") {
+              $('#minionOneEyeSwitch').prop('checked', payload.motionDetected);
             }
           }
         }

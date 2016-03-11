@@ -93,6 +93,8 @@ var polarSnowDeviceToken = '';
 var squirrelDeviceID ='b827eb930823';
 // Pradeep's Device token
 var squirrelDeviceToken = 's9YegBi@NvRlzJedf+';
+// Kai's 'snail' raspberryPi
+var snailDeviceID = 'b827ebacefce';
 
 
 // only if you use the device library
@@ -118,16 +120,23 @@ appClient.on("connect", function () {
 
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
 var otherSensor = {"payload":{}};
-var allHouses = [{"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}},
-                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}},
-                 {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}}];
-
+var allHouses = [{"name":"alerts","quakeAlert":false, "humidityAlert":false, "motionAlert": false, "rainAlert":false},
+                 {"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
+                 {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
+                 {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}, "myQuakeMagnitude":0},
+                 {"name":"snail","deviceId":snailDeviceID,"quakePayload":{},"motionPayload":{}, "myQuakeMagnitude":0}
+                 ];
+allHouses.isQuake = false;
 
 appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,payload){
+  // temp total quake magnitude
+  var totalQuakeMag = 0;
+  var nbrOfDevices = 0;
   allHouses.forEach(function(myHouse) {
     if (myHouse.deviceId === deviceId) {
       if ( eventType === 'quakeSensor' ){
-        myHouse.quakePayload = JSON.parse(payload);
+        myHouse.quakePayload = JSON.parse(JSON.parse(payload));
+        myHouse.myQuakeMagnitude = Math.abs(myHouse.quakePayload.gyroScaledZ) + Math.abs(myHouse.quakePayload.gyroScaledY) + Math.abs(myHouse.quakePayload.gyroScaledX);   
       } 
       else if (eventType === 'motionSensor'){
         myHouse.motionPayload = JSON.parse(payload);
@@ -144,7 +153,27 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
         console.log('Got other events of ' + eventType + ' from ' + deviceId);
       } 
     }
+    // aggregate temp total quake magnitude 
+    if (myHouse.myQuakeMagnitude !== undefined){
+      nbrOfDevices = nbrOfDevices + 1;
+      totalQuakeMag = totalQuakeMag + myHouse.myQuakeMagnitude;
+    }
   });
+  // calc avg quakeMagnitude and if above threshold, send alert
+  if (nbrOfDevices !== 0) {
+	  var avgQuakeMag = totalQuakeMag / nbrOfDevices;
+	  if (avgQuakeMag > 10) {
+		if (allHouses[0].quakeAlert === false) {
+			console.log("Quake data changed! Quake detected! Data: avg - " +  avgQuakeMag +" total - " + totalQuakeMag + " nbrdevices - " + nbrOfDevices);
+		}
+	    allHouses[0].quakeAlert = true;
+	  } else {
+		if (allHouses[0].quakeAlert === true) {
+			console.log("Quake data changed! No quaking at the moment");
+		}
+		allHouses[0].quakeAlert = false;
+	  }  
+  }
   
 });
 
