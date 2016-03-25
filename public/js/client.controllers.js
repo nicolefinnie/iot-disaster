@@ -113,10 +113,8 @@ function ($scope, $rootScope, $http, $interval) {
           if(Object.keys(myHouse.rainPayload).length > 0) {
             var payload = JSON.parse(myHouse.rainPayload);
             console.log(' rain payload ' + JSON.stringify(payload));
-              if(myHouse.name == "squirrel") {
-                  //It's just Pradeep's house here !
-                  //raindropReadings[minionDuckQuakeIndex] = payload.rainDetected;
-                $scope.raindrop = payload.rainDetected === 0 ? true : false;
+              if(myHouse.name == "snowy") {
+                $scope.raindrop = payload.rainDetected;
                 console.log('Rain drop ' + payload.rainDetected);
                
               }

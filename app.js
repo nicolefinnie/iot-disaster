@@ -130,8 +130,8 @@ allHouses.isQuake = false;
 
 appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,payload){
   // temp total quake magnitude
-  var totalQuakeMag = 0;
-  var nbrOfDevices = 0;
+  var totalQuakeMagnitude = 0;
+  var numberOfDevices = 0;
   allHouses.forEach(function(myHouse) {
     if (myHouse.deviceId === deviceId) {
       if ( eventType === 'quakeSensor' ){
@@ -146,11 +146,9 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
       }
       else if (eventType ==='humitureSensor'){
     	myHouse.humiturePayload = JSON.parse(payload);
-    	//console.log('The humiture sensor data is'+JSON.parse(payload));
       }
       else if (eventType ==='rainSensor'){
     	myHouse.rainPayload = JSON.parse(payload);   
-    	console.log('The rain sensor data is'+JSON.parse(payload));
       }
       else {
         //console.log('Got other events of ' + eventType + ' from ' + deviceId + ':' + JSON.stringify(payload));
@@ -158,23 +156,16 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
     }
     // aggregate temp total quake magnitude 
     if (myHouse.myQuakeMagnitude !== undefined && myHouse.myQuakeMagnitude > 5){
-      nbrOfDevices = nbrOfDevices + 1;
-      totalQuakeMag = totalQuakeMag + myHouse.myQuakeMagnitude;
+      numberOfDevices = numberOfDevices + 1;
+      totalQuakeMagnitude = totalQuakeMagnitude + myHouse.myQuakeMagnitude;
     }
   });
-  // calc avg quakeMagnitude and if above threshold, send alert
-  if (nbrOfDevices !== 0) {
-	  var avgQuakeMag = totalQuakeMag / nbrOfDevices;
-      console.log("Quake data: avg - " +  avgQuakeMag +" total - " + totalQuakeMag + " nbrdevices - " + nbrOfDevices);
-	  if ((avgQuakeMag > 40) && (nbrOfDevices > 1)) {
-		if (allHouses[0].quakeAlert === false) {
-			console.log("Quake data changed! Quake detected! Data: avg - " +  avgQuakeMag +" total - " + totalQuakeMag + " nbrdevices - " + nbrOfDevices);
-		}
+  // calculate average quakeMagnitude and if above threshold, send alert
+  if (numberOfDevices !== 0) {
+	  var avgQuakeMag = totalQuakeMagnitude / numberOfDevices;
+      if ((avgQuakeMag > 40) && (numberOfDevices > 1)) {
 	    allHouses[0].quakeAlert = true;
 	  } else {
-		if (allHouses[0].quakeAlert === true) {
-			console.log("Quake data changed! No quaking at the moment");
-		}
 		allHouses[0].quakeAlert = false;
 	  }  
   }
