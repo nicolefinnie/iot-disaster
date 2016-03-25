@@ -4,6 +4,9 @@ import humitureSensor
 import json
 import time
 
+gpioPort = 17
+humitureSensor.setup(gpioPort)
+
 while True:
     time.sleep(2)
     try:

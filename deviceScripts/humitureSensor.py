@@ -1,15 +1,24 @@
-#!/usr/bin/python
-import sys
-import Adafruit_DHT
+#!/usr/bin/env python
+# This is only run on Raspberry pi
+import Adafruit_DHT as DHT
+import RPi.GPIO as GPIO
 
-# Routine to return the humiture data from DHT sensor
-def humiture():
+# model DHT11
+DHTModel = 11
+# GPIO pin
+gpioPort = 0
+
+def setup(inputPort):
+    global gpioPort
+    gpioPort = inputPort
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(gpioPort, GPIO.IN)
+    
+def sample():
+    global gpioPort
     data = {}
-    humidity, temperature = Adafruit_DHT.read_retry(11, 4)
-    data['temp']=temperature
-    data['humid']=humidity
-    if humidity is not None and temperature is not None:
-       print 'Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity)	
-    else:
-       print 'Failed to get reading. Try again!'
-    return data 
+    humidity, temperature = DHT.read_retry(DHTModel, gpioPort)
+    currentState = GPIO.input(gpioPort)
+    data['temp'] = temperature
+    data['humid'] = humidity
+    return data

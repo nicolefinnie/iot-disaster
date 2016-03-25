@@ -3,10 +3,10 @@
               <div class="card-content" >
               <div class="card-title"><i class="material-icons">invert_colors</i>&nbsp;&nbsp;Tsunami sensors</div>
                   <div class="row" >
-                    <div class="col m6">
+                    <div ng-class="raindrop? 'ibm-rain':''" class="col m6">
                         <canvas id="humitureCanvas1" height="350"></canvas>
                     </div>
-                    <div ng-class="raindrop? 'ibm-rain':''" class="col m6">
+                    <div class="col m6">
                         <canvas id="humitureCanvas2" height="350"></canvas>
                     </div>
                   </div>

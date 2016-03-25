@@ -4,8 +4,11 @@ import quakeSensor
 import json
 import time
 
+i2cAddress = 0x68
+quakeSensor.setup(i2cAddress)
+
 while True:
-    time.sleep(2)
+    time.sleep(0.2)
     try:
         quakeData = quakeSensor.sample()
         jsonData = json.dumps(quakeData)

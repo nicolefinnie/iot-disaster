@@ -2,23 +2,32 @@
 # Only run on the raspberry pi
 import smbus
 import math
+from dbus._dbus import Bus
  
 # Power management registers
 power_mgmt_1 = 0x6b
-power_mgmt_2 = 0x6c
- 
-bus = smbus.SMBus(1) # or bus = smbus.SMBus(0) for pre-Revision 2 boards
-address = 0x68       # This is the address value read via the i2cdetect command
- 
-# Now wake the 6050 up as it starts in sleep mode
-bus.write_byte_data(address, power_mgmt_1, 0)
- 
+# or bus = smbus.SMBus(0) for pre-Revision 2 boards
+bus = smbus.SMBus(1)
+# This is the address value read via the i2cdetect command, can be changed via setup()
+i2cAddress = 0x00
+  
+def setup(address):
+    global i2cAddress
+    global bus
+    i2cAddress = address
+    # Now wake the 6050 up as it starts in sleep mode
+    bus.write_byte_data(i2cAddress, power_mgmt_1, 0)
+         
 def read_byte(adr):
-    return bus.read_byte_data(address, adr)
+    global i2cAddress
+    global bus
+    return bus.read_byte_data(i2cAddress, adr)
  
 def read_word(adr):
-    high = bus.read_byte_data(address, adr)
-    low = bus.read_byte_data(address, adr+1)
+    global i2cAddress
+    global bus
+    high = bus.read_byte_data(i2cAddress, adr)
+    low = bus.read_byte_data(i2cAddress, adr+1)
     val = (high << 8) + low
     return val
  
