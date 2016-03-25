@@ -18,6 +18,7 @@ def sample():
         global initialRainIntensityReading
         currentRainIntensity = ADC.read(0)
         data = {}
+        data['rainReading'] = currentRainIntensity
         # if any rain drop is detected
         if (currentRainIntensity < initialRainIntensityReading) :
                 data['rainDetected'] = True;
