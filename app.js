@@ -120,7 +120,7 @@ appClient.on("connect", function () {
 
 // get device events, we need to initialize this JSON doc with an attribute because it's called by reference
 var otherSensor = {"payload":{}};
-var allHouses = [{"name":"alerts","quakeAlert":false, "humidityAlert":false, "motionAlert": false, "rainAlert":false},
+var allHouses = [{"name":"alerts","quakeAlert":false, "possibleQuakeAlert":false, "humidityAlert":false, "motionAlert": false, "rainAlert":false},
                  {"name":"snowy", "deviceId":snowyDeviceID, "quakePayload":{}, "motionPayload":{}, "humiturePayload":{}, "myQuakeMagnitude":0},
                  {"name":"hhbear", "deviceId":hhbearDeviceID, "quakePayload":{}, "motionPayload":{}, "myQuakeMagnitude":0},
                  {"name":"squirrel","deviceId":squirrelDeviceID,"humiturePayload":{},"rainPayload":{}, "myQuakeMagnitude":0},
@@ -137,6 +137,9 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
       if ( eventType === 'quakeSensor' ){
         myHouse.quakePayload = JSON.parse(JSON.parse(payload));
         myHouse.myQuakeMagnitude = Math.abs(myHouse.quakePayload.gyroScaledZ) + Math.abs(myHouse.quakePayload.gyroScaledY) + Math.abs(myHouse.quakePayload.gyroScaledX);   
+        if (myHouse.myQuakeMagnitude > 40) {
+          allHouses[0].possibleQuakeAlert = true;
+        }
       } 
       else if (eventType === 'motionSensor'){
         myHouse.motionPayload = JSON.parse(payload);

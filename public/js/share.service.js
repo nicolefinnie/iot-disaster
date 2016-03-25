@@ -28,6 +28,18 @@ var minionOneEyeDialog = "I have a monocle.";
 var minionDuckDialog = "I have a duck inner tube.";
 var minionPurpleDialog = "Ahhhhhhh!!!!";
 
+//=== SMS service ===
+var minionNumber = '+4915170002048';
+var minionGirlNumber = '+4915120172020';
+var minionOneEyeNumber = '+4917684041864';
+var minionDuckNumber = '+4915146505935';
+
+var SMSData = {
+  fromNumber: '+4915735994570',
+  message: '',
+  targetNumber: [minionNumber, minionGirlNumber]
+};
+
 //== for quake service ==
 var minionQuakeIndex = 0;
 var minionGirlQuakeIndex = 1;

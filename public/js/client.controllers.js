@@ -20,52 +20,55 @@ function ($scope, $rootScope, $http, $interval) {
     });   
   };
   
-  $scope.sendMessage = function(){
-    //TODO register phoneNumber and message
-    var msgData = { 'phoneNumber': $scope.phoneNumber, 
-                    'message': $scope.message};
+  $scope.sendMessage = function(message){
+    SMSData.message = message;
     $http({
       method: 'POST',
       url: '/message',
-      data: msgData
+      data: SMSData
     }).then(function successCallback(response) {
-       console.log("successfully sent text " + JSON.stringify(response));
+       console.log("successfully sent text: " + JSON.stringify(response));
     }, function errorCallback(response) {
-        console.log("failed to send text");
+        console.log("failed to send text, err: " + JSON.stringify(response));
     });
   };
   
-  // this is a timer that prevents toasts to be spammed
+  // Only toast the eqrthquake alert once, to prevent spamming
   $scope.toastState = false;
-  var toastIfNewQuakeDetected = function(input){
-	  if ($scope.toastState !== input && input === true) {
-		  var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
-		  $scope.sendQuakeAlert();
-		  $scope.sendMessage();
-          Materialize.toast($toastContent, 5000);
-	  }
-	  $scope.toastState = input;
+  var sendAlertsIfNewQuakeDetected = function(quakeDetected){
+    if ($scope.toastState !== quakeDetected && quakeDetected === true) {
+      var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
+      Materialize.toast($toastContent, 5000);
+      $scope.sendQuakeAlert();
+      $scope.sendMessage('Danger! Earthquake detected! Seek immediate cover!');
+    }
+    $scope.toastState = quakeDetected;
   }
-  
 
+  $scope.sentSingleAlert = false;
    // Set of all tasks that should be performed periodically
   $scope.runIntervalTasks = function() {
-  
+
     $http({
       method: 'GET',
       url: '/sensordata'
     }).then(function successCallback(response) {
-    	
       var isQuake = response.data[0].quakeAlert;
-      toastIfNewQuakeDetected(isQuake);
-      
+      sendAlertsIfNewQuakeDetected(isQuake);
+      // If we have not detected a quake, then if one sensor is showing a potential
+      // for a quake, send an SMS.
+      if (!isQuake && ($scope.sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
+        $scope.sentSingleAlert = true;
+        $scope.sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
+      }
+
       response.data.forEach(function(myHouse){
-    	
+
         // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
         if (myHouse.quakePayload !== undefined) {
           if(Object.keys(myHouse.quakePayload).length > 0){
             var payload = myHouse.quakePayload;
-  
+
             var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
             if (myHouse.name === "snowy") {
               quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
@@ -143,7 +146,7 @@ function ($scope, $rootScope, $http, $interval) {
   };
   // Someone asked us to refresh
   $rootScope.$on('refreshSensorData', function(){
-    // Check for new input events every second
+    // Check for new input events twice per second
     var pollingInterval = 500;
     // Prevent race conditions - stop any current polling, then issue a new
     // refresh task immediately, and then start polling.  Note that polling
