@@ -9,7 +9,8 @@ function ($scope, $rootScope, $http, $interval) {
   $scope.minionGirl = minionGirl;
   $scope.minionOneEye = minionOneEye;
   $scope.minionDuck = minionDuck;
-  $scope.sendQuakeAlert = function() {
+  
+  var sendQuakeAlert = function() {
     $http({
       method: 'GET',
       url: '/sendQuakeAlert'
@@ -20,7 +21,7 @@ function ($scope, $rootScope, $http, $interval) {
     });   
   };
   
-  $scope.sendMessage = function(message){
+  var sendMessage = function(message){
     SMSData.message = message;
     $http({
       method: 'POST',
@@ -34,21 +35,21 @@ function ($scope, $rootScope, $http, $interval) {
   };
   
   // Only toast the eqrthquake alert once, to prevent spamming
-  $scope.toastState = false;
+  var sentQuakeAlert = false;
   var sendAlertsIfNewQuakeDetected = function(quakeDetected){
-    if ($scope.toastState !== quakeDetected && quakeDetected === true) {
+    if (sentQuakeAlert !== quakeDetected && quakeDetected === true) {
       var $toastContent = $('<span>Earthquake detected, sending alerts!!</span>');
       Materialize.toast($toastContent, 5000);
-      $scope.sendQuakeAlert();
-      $scope.sendMessage('Danger! Earthquake detected! Seek immediate cover!');
+      sendQuakeAlert();
+      sentQuakeAlert = quakeDetected;
+      sendMessage('Danger! Earthquake detected! Seek immediate cover!');
+      console.log('Danger! Earthquake detected! Seek immediate cover!');
     }
-    $scope.toastState = quakeDetected;
   }
 
-  $scope.sentSingleAlert = false;
+  var sentSingleAlert = false;
    // Set of all tasks that should be performed periodically
-  $scope.runIntervalTasks = function() {
-
+  var runIntervalTasks = function() {
     $http({
       method: 'GET',
       url: '/sensordata'
@@ -57,9 +58,10 @@ function ($scope, $rootScope, $http, $interval) {
       sendAlertsIfNewQuakeDetected(isQuake);
       // If we have not detected a quake, then if one sensor is showing a potential
       // for a quake, send an SMS.
-      if (!isQuake && ($scope.sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
-        $scope.sentSingleAlert = true;
-        $scope.sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
+      if (!isQuake && (sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
+        sentSingleAlert = true;
+        sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
+        console.log('Warning! Possible earthquake detected. Stand by for further instructions.');
       }
 
       response.data.forEach(function(myHouse){
@@ -112,12 +114,9 @@ function ($scope, $rootScope, $http, $interval) {
         if(myHouse.rainPayload !== undefined) {
           if(Object.keys(myHouse.rainPayload).length > 0) {
             var payload = JSON.parse(myHouse.rainPayload);
-            console.log(' rain payload ' + JSON.stringify(payload));
-              if(myHouse.name == "snowy") {
-                $scope.raindrop = payload.rainDetected;
-                console.log('Rain drop ' + payload.rainDetected);
-               
-              }
+            if(myHouse.name == "snowy") {
+              $scope.raindrop = payload.rainDetected;
+            }
           }
         }
         
@@ -130,13 +129,13 @@ function ($scope, $rootScope, $http, $interval) {
   };
 
   var polling; // promise, set when we start intervals, used to cancel intervals.
-  $scope.startPolling = function(pollingInterval) {
+  var startPolling = function(pollingInterval) {
     polling = $interval(function() {
-      $scope.runIntervalTasks();
+      runIntervalTasks();
     }, pollingInterval);
   };
 
-  $scope.stopPolling = function() {
+  var stopPolling = function() {
     if (angular.isDefined(polling)) {
       $interval.cancel(polling);
       polling = undefined;
@@ -149,15 +148,15 @@ function ($scope, $rootScope, $http, $interval) {
     // Prevent race conditions - stop any current polling, then issue a new
     // refresh task immediately, and then start polling.  Note that polling
     // sleeps first, so we won't be running two refreshes back-to-back.
-    $scope.stopPolling();
-    $scope.runIntervalTasks();
-    $scope.startPolling(pollingInterval);
+    stopPolling();
+    runIntervalTasks();
+    startPolling(pollingInterval);
   });
 
   // Tell ourselves to refresh new mail count and start polling
   $rootScope.$broadcast('refreshSensorData');
   $scope.$on('$destroy', function() {
-    $scope.stopPolling();
+    stopPolling();
   });
 }
 ]);
