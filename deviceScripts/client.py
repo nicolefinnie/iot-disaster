@@ -29,7 +29,7 @@ def myEarthquakeAlert(cmd):
                 os.system('amixer cset numid=3 1')
                 #set volume to 100%
             	os.system('amixer set PCM -- 100%')
-                os.system('mpg321 -n 1000 music/imperialMarch.mp3 &')
+                os.system('mpg321 -n 550 music/imperialMarch.mp3 &')
 
 try:
     options = ibmiotf.application.ParseConfigFile("/home/pi/device.cfg")

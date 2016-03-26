@@ -1,5 +1,5 @@
 function initializeLineChart(){
-  var quakeThreshold = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25];
+  var quakeThreshold = [40, 40, 40, 40, 40, 40, 40, 40, 40, 40];
   var quakeSamplePoints = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
