@@ -13,7 +13,6 @@ var bodyParser = require('body-parser');
 
 // IBM IoT service
 var Client = require('ibmiotf').IotfApplication;
-var DeviceClient = require('ibmiotf').IotfDevice;
 
 // third-party twilio service
 var twilio = require('twilio');
@@ -76,7 +75,8 @@ twilioToken = twilioConfig.credentials.authToken;
 
 var iotAppConfig = {
     "org" : iotConfig.credentials.org,
-    "id" : iotConfig.credentials.iotCredentialsIdentifier,
+    // ID has to be unique, https://docs.internetofthings.ibmcloud.com/applications/mqtt.html#/mqtt-client-identifier#mqtt-client-identifier
+    "id" : Date.now().toString(),
     "auth-method" : "apikey",
     "auth-key" : iotConfig.credentials.apiKey,
     "auth-token" : iotConfig.credentials.apiToken
@@ -91,23 +91,11 @@ var polarSnowDeviceToken = '';
 // Pradeep's 'Squirrel' raspberryPi 
 //Need changes here !
 var squirrelDeviceID ='b827eb930823';
-// Pradeep's Device token
-var squirrelDeviceToken = 's9YegBi@NvRlzJedf+';
 // Kai's 'snail' raspberryPi
 var snailDeviceID = 'b827ebacefce';
 
 
-// only if you use the device library
-var iotDeviceConfig = {
-    "org" : iotConfig.credentials.org,
-    "id" : squirrelDeviceID,
-    "type" : "raspberrypi",
-    "auth-method" : "token",
-    "auth-token" : squirrelDeviceToken
-}
-
 var appClient = new Client(iotAppConfig);
-var deviceClient = new DeviceClient(iotDeviceConfig);
 
 appClient.connect();
 console.log("Successfully connected to our IoT service!");
