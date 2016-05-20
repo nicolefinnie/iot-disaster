@@ -4,11 +4,14 @@ var homeControllers = angular.module('HomeControllers', []);
 
 homeControllers.controller('HomeController', ['$scope', '$rootScope', '$http', '$interval', 
 function ($scope, $rootScope, $http, $interval) {
-  $scope.raindrop = false;
   $scope.minion = minion;
   $scope.minionGirl = minionGirl;
   $scope.minionOneEye = minionOneEye;
   $scope.minionDuck = minionDuck;
+  $scope.isRainMinion = false;
+  $scope.isRainMinionGirl = false;
+  $scope.isRainMinionOneEye = false;
+  $scope.isRainMinionDuck = false;
 
   // Use of HomeController should use ng-init to call oneTimeInit() the
   // first time the app loads, to ensure it does not collect stale
@@ -98,11 +101,16 @@ function ($scope, $rootScope, $http, $interval) {
               var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
               if (myHouse.name === "snowy") {
                 quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
-              } else if (myHouse.name === "hhbear") {
+              } 
+              else if (myHouse.name === "hhbear") {
                 quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
-              } else if (myHouse.name === "snail") {
+              } 
+              else if (myHouse.name === "snail") {
                 quakeMagnitude[minionOneEyeQuakeIndex] = myQuakeMagnitude;
-              }// else if (myHouse.name === "OTHER_DEVICE_NAME")
+              } 
+              else if (myHouse.name === "squirrel") {
+                quakeMagnitude[minionDuckQuakeIndex] = myQuakeMagnitude;
+              }
             }
           }   
           if (myHouse.motionPayload !== undefined) {
@@ -111,35 +119,55 @@ function ($scope, $rootScope, $http, $interval) {
               var payload = JSON.parse(myHouse.motionPayload);
               if (myHouse.name === "snowy") {
                 $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
-              } else if (myHouse.name === "hhbear") {
+              } 
+              else if (myHouse.name === "hhbear") {
                 $('#minionSwitch').prop('checked', payload.motionDetected);   
-              } else if (myHouse.name === "snail") {
+              } 
+              else if (myHouse.name === "snail") {
                 $('#minionOneEyeSwitch').prop('checked', payload.motionDetected);
+              } 
+              else if (myHouse.name === "squirrel") {
+                $('#minionDuckSwitch').prop('checked', payload.motionDetected);
               }
             }
           }
-          
+
           if(myHouse.humiturePayload !==undefined) {
             if(Object.keys(myHouse.humiturePayload).length > 0) {
                 var payload = JSON.parse(myHouse.humiturePayload);
-                if(myHouse.name == "squirrel") {
-                    humidReadings[minionDuckQuakeIndex] = payload.humid;
-                    temperatureReadings[minionDuckQuakeIndex] = payload.temp;
-                 
+                if(myHouse.name == "hhbear") {
+                  humidReadings[minionQuakeIndex] = payload.humid;
+                  temperatureReadings[minionQuakeIndex] = payload.temp;
                 }
                 else if(myHouse.name == "snowy") {
-                    humidReadings[minionGirlQuakeIndex] = payload.humid;
-                    temperatureReadings[minionGirlQuakeIndex] = payload.temp;
+                  humidReadings[minionGirlQuakeIndex] = payload.humid;
+                  temperatureReadings[minionGirlQuakeIndex] = payload.temp;
                 }
-  
+                else if(myHouse.name == "snail") {
+                  humidReadings[minionOneEyeQuakeIndex] = payload.humid;
+                  temperatureReadings[minionOneEyeQuakeIndex] = payload.temp;
+                }
+                else if(myHouse.name == "squirrel") {
+                    humidReadings[minionDuckQuakeIndex] = payload.humid;
+                    temperatureReadings[minionDuckQuakeIndex] = payload.temp;
+                }
             }
           }
           // rain drop
           if(myHouse.rainPayload !== undefined) {
             if(Object.keys(myHouse.rainPayload).length > 0) {
               var payload = JSON.parse(myHouse.rainPayload);
-              if(myHouse.name == "snowy") {
-                $scope.raindrop = payload.rainDetected;
+              if(myHouse.name == "hhbear") {
+                $scope.isRainMinion = payload.rainDetected;
+              }
+              else if(myHouse.name == "snowy") {
+                $scope.isRainMinionGirl = payload.rainDetected;
+              }
+              else if(myHouse.name == "snail") {
+                $scope.isRainMinionOneEye = payload.rainDetected;
+              }
+              else if(myHouse.name == "squirrel") {
+                $scope.isRainMinionDuck = payload.rainDetected;
               }
             }
           }

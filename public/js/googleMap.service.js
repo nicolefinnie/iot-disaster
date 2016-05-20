@@ -4,7 +4,6 @@ var residentMinionGirlMarker;
 var residentMinionOneEyeMarker;
 var residentMinionDuckMarker;
 
-
 function initMap() {
   // Google Maps  
   $('#map').addClass('loading');    
@@ -46,7 +45,6 @@ function initializeMarkers(){
   var minionGirlLocation = new google.maps.LatLng(minionGirlPos.lat, minionGirlPos.lng);
   var minionOneEyeLocation = new google.maps.LatLng(minionOneEyePos.lat, minionOneEyePos.lng);
   var minionDuckLocation = new google.maps.LatLng(minionDuckPos.lat, minionDuckPos.lng);
-  var minionPurpleLocation = new google.maps.LatLng(minionPurplePos.lat, minionPurplePos.lng);
   
 // resident minion
   var residentMinionImage = {
@@ -117,25 +115,7 @@ function initializeMarkers(){
     icon: residentMinionDuckImage,
     animation: google.maps.Animation.DROP,
     zIndex: 3});
-  
-  
-  // resident minion purple
-  var residentMinionPurpleImage = {
-      url: 'images/freeMinionIcons/minionpurple.png',
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(48, 48)
-    };
-  
-  var residentMinionPurpleMarker = new google.maps.Marker({
-    position: minionPurpleLocation,
-    map: map,
-    draggable: true,
-    title: minionPurple,
-    icon: residentMinionPurpleImage,
-    zIndex: 3});
-  
+
   var infowindow = new google.maps.InfoWindow({
     content: '<div><p>'+minionDialog+'</p></div>'
   });
@@ -152,9 +132,6 @@ function initializeMarkers(){
     content: '<div><p>'+minionDuckDialog+'</p></div>'
   });
   
-  var infowindowPurple = new google.maps.InfoWindow({
-    content: '<div><p>'+minionPurpleDialog+'</p></div>'
-  });
   
   google.maps.event.addListener(residentMinionMarker, 'click', function() {
       infowindow.open(map,residentMinionMarker);
@@ -172,9 +149,4 @@ function initializeMarkers(){
     infowindowDuck.open(map,residentMinionDuckMarker);
   });
   
-  google.maps.event.addListener(residentMinionPurpleMarker, 'click', function() {
-    infowindowPurple.open(map,residentMinionPurpleMarker);
-  });
-  
-
 }

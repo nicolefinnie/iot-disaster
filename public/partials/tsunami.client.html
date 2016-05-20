@@ -3,11 +3,17 @@
               <div class="card-content" >
               <div class="card-title"><i class="material-icons">invert_colors</i>&nbsp;&nbsp;Tsunami sensors</div>
                   <div class="row" >
-                    <div ng-class="raindrop? 'ibm-rain':''" class="col m6">
-                        <canvas id="humitureCanvas1" height="350"></canvas>
+                    <div ng-class="isRainMinion? 'ibm-rain':''" class="col m6">
+                        <canvas id="humitureCanvas1" height="172"></canvas>
                     </div>
-                    <div class="col m6">
-                        <canvas id="humitureCanvas2" height="350"></canvas>
+                    <div ng-class="isRainMinionGirl? 'ibm-rain':''" class="col m6">
+                        <canvas id="humitureCanvas2" height="172"></canvas>
+                    </div>
+                    <div ng-class="isRainMinionOneEye? 'ibm-rain':''" class="col m6">
+                        <canvas id="humitureCanvas3" height="172"></canvas>
+                    </div>
+                    <div ng-class="isRainMinionDuck? 'ibm-rain':''" class="col m6">
+                        <canvas id="humitureCanvas4" height="172"></canvas>
                     </div>
                   </div>
               </div>
@@ -19,32 +25,34 @@
                         <img src="images/freeMinionIcons/minion.png">
                       </a>
                     </div>
-                    <div class="col m2 s8">
-                        <p>sensor off</p>
+                    <div class="col m5 s8">
+                         <a class="waves-effect waves-light btn-floating cyan-btn small-btn"></a>
                     </div>
                     <div class="col m1 s4">
                       <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionGirl}}> 
                         <img src="images/freeMinionIcons/miniongirl.png">
                       </a>
                     </div>
-                    <div class="col m2 s8">
+                    <div class="col m5 s8">
                        <a class="waves-effect waves-light btn-floating green-btn small-btn"></a>
                     </div>
+                 </div>
+                 <div class="row">
                     <div class="col m1 s4">
                       <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionOneEye}}> 
                         <img src="images/freeMinionIcons/miniononeeye.png">
                       </a>
                     </div>
-                    <div class="col m2 s8">
-                     <p>sensor off</p>
+                    <div class="col m5 s8">
+                      <a class="waves-effect waves-light btn-floating yellow-btn small-btn"></a>
                     </div>
                     <div class="col m1 s4">
                       <a class="tooltipped waves-effect waves-light" data-position="top" data-delay="10" data-tooltip={{minionDuck}}> 
                         <img src="images/freeMinionIcons/minionduck.png">
                       </a>
                     </div>
-                    <div class="col m2 s8">
-                       <a class="waves-effect waves-light btn-floating green-btn small-btn"></a>
+                    <div class="col m5 s8">
+                       <a class="waves-effect waves-light btn-floating gray-btn small-btn"></a>
                     </div>
                 </div>
    

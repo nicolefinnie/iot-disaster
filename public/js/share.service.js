@@ -50,12 +50,11 @@ var numQuakeDetectors = 3;
 var quakeMagnitude = [0,0,0];
 
 
-var numQuakeDetectors = 3;
+var numQuakeDetectors = 4;
 var numTemperatureDetectors = 4;
-var numHumitureDetector = 2;
-var numRaindropDetector = 1;
+var numHumitureDetector = 4;
+var numRaindropDetector = 4;
 
 var quakeMagnitude = [0,0,0,0];
 var temperatureReadings = [0,0,0,0];
 var humidReadings = [0,0,0,0];
-var raindropReadings = [false, false, false, false];

@@ -7,20 +7,20 @@ function initializeBarChart(){
       datasets: [
           {
               label: minion,
-              fillColor: "rgba("+ yellow + ",0.5)",
-              strokeColor: "rgba("+ yellow + ",0.8)",
+              fillColor: "rgba("+ cyan + ",0.5)",
+              strokeColor: "rgba("+ cyan + ",0.8)",
               data: ['', 25, '']
           },
           {
             label: minionGirl,
-            fillColor: "rgba("+ cyan + ",0.5)",
-            strokeColor: "rgba("+ cyan + ",0.8)",
+            fillColor: "rgba("+ green + ",0.5)",
+            strokeColor: "rgba("+ green + ",0.8)",
             data: ['', 23, '']
           },
           {
             label: minionOneEye,
-            fillColor: "rgba("+ cyan + ",0.5)",
-            strokeColor: "rgba("+ cyan + ",0.8)",
+            fillColor: "rgba("+ yellow + ",0.5)",
+            strokeColor: "rgba("+ yellow + ",0.8)",
             data: ['', 22, '']
           },
           {

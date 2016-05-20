@@ -2,6 +2,7 @@ function initializeLineChart(){
   var quakeThreshold = [40, 40, 40, 40, 40, 40, 40, 40, 40, 40];
   var quakeSamplePoints = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
   
   var canvas = document.getElementById('quakeCanvas'),
@@ -21,19 +22,25 @@ function initializeLineChart(){
           fillColor: "rgba("+ green + ",0.2)",
           strokeColor: "rgba("+ green + ",1)",
           data: quakeSamplePoints[1]
-      },
+        },
         {
           label: minionOneEye,
           fillColor: "rgba("+ yellow + ",0.2)",
           strokeColor: "rgba("+ yellow + ",1)",
           data: quakeSamplePoints[2]
-      },
-      {
-        label: "Earthquake Threshold",
-        fillColor: "rgba("+ gray + ",0.2)",
-        strokeColor: "rgba("+ gray + ",0.5)",
-        data: quakeThreshold
-      }
+        },
+        {
+          label: minionDuck,
+          fillColor: "rgba("+ gray + ",0.5)",
+          strokeColor: "rgba("+ gray + ",1)",
+          data: quakeSamplePoints[3]
+        },
+        {
+          label: "Earthquake Threshold",
+          fillColor: "rgba("+ gray + ",0.2)",
+          strokeColor: "rgba("+ gray + ",0.5)",
+          data: quakeThreshold
+        }
     ]
   };
 

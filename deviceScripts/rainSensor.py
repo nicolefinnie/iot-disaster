@@ -6,21 +6,18 @@ import math
 
 initialRainIntensityReading = 0
 lowerBoundary = 0
-upperBoundary = 0
 # configure the delta here
 rainDelta = 2
 
 def setup(gpioPort, i2cAddress):
         global initialRainIntensityReading
         global lowerBoundary
-        global upperBoundary
         GPIO.setmode(GPIO.BCM)
         ADC.setup(i2cAddress)
         GPIO.setup(gpioPort, GPIO.IN)
         initialRainIntensityReading = ADC.read(0)
         # set the delta zone so we dont need to recalc it every time
         lowerBoundary = initialRainIntensityReading - rainDelta
-        upperBoundary = initialRainIntensityReading + rainDelta
         print "initial rain intensity reading: ", initialRainIntensityReading
 
 def sample():
@@ -28,7 +25,7 @@ def sample():
         data = {}
         data['rainReading'] = currentRainIntensity
         # if any rain drop is detected
-        if (lowerBoundary > currentRainIntensity < upperBoundary) :
+        if (lowerBoundary > currentRainIntensity) :
                 data['rainDetected'] = True;
         else:
                 data['rainDetected'] = False;
