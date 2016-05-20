@@ -42,7 +42,7 @@ function ($scope, $rootScope, $http, $interval) {
       Materialize.toast($toastContent, 5000);
       sendQuakeAlert();
       sentQuakeAlert = quakeDetected;
-      sendMessage('Danger! Earthquake detected! Seek immediate cover!');
+      //sendMessage('Danger! Earthquake detected! Seek immediate cover!');
       console.log('Danger! Earthquake detected! Seek immediate cover!');
     }
   }
@@ -60,7 +60,7 @@ function ($scope, $rootScope, $http, $interval) {
       // for a quake, send an SMS.
       if (!isQuake && (sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
         sentSingleAlert = true;
-        sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
+        //sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
         console.log('Warning! Possible earthquake detected. Stand by for further instructions.');
       }
 
