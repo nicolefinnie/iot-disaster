@@ -9,15 +9,36 @@ function ($scope, $rootScope, $http, $interval) {
   $scope.minionGirl = minionGirl;
   $scope.minionOneEye = minionOneEye;
   $scope.minionDuck = minionDuck;
-  
+
+  // Use of HomeController should use ng-init to call oneTimeInit() the
+  // first time the app loads, to ensure it does not collect stale
+  // alert data from a long-running server process on Bluemix.
+  var initInProgress = true;
+  $scope.oneTimeInit = function() {
+    var resetData = {
+       message: 'reset'
+    };
+    $http({
+      method: 'POST',
+      url: '/sensordata',
+      data: resetData
+    }).then(function successCallback(response) {
+      console.log("Initialization complete, starting to read sensor data.");
+      initInProgress = false;
+    }, function errorCallback(response) {
+      console.log("Initialization failed, err: " + JSON.stringify(response));
+      initInProgress = false;
+    });
+  };
+
   var sendQuakeAlert = function() {
     $http({
       method: 'GET',
       url: '/sendQuakeAlert'
     }).then(function successCallback(response) {
-       console.log("Successfully sent earth quake alert");
+      console.log("Successfully sent earth quake alert");
     }, function errorCallback(response) {
-        console.log("failed to listen to sensor data");
+      console.log("failed to listen to sensor data");
     });   
   };
   
@@ -28,9 +49,9 @@ function ($scope, $rootScope, $http, $interval) {
       url: '/message',
       data: SMSData
     }).then(function successCallback(response) {
-       console.log("successfully sent text: " + JSON.stringify(response));
+      console.log("successfully sent text: " + JSON.stringify(response));
     }, function errorCallback(response) {
-        console.log("failed to send text, err: " + JSON.stringify(response));
+      console.log("failed to send text, err: " + JSON.stringify(response));
     });
   };
   
@@ -48,84 +69,88 @@ function ($scope, $rootScope, $http, $interval) {
   }
 
   var sentSingleAlert = false;
-   // Set of all tasks that should be performed periodically
+  // Set of all tasks that should be performed periodically
   var runIntervalTasks = function() {
-    $http({
-      method: 'GET',
-      url: '/sensordata'
-    }).then(function successCallback(response) {
-      var isQuake = response.data[0].quakeAlert;
-      sendAlertsIfNewQuakeDetected(isQuake);
-      // If we have not detected a quake, then if one sensor is showing a potential
-      // for a quake, send an SMS.
-      if (!isQuake && (sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
-        sentSingleAlert = true;
-        //sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
-        console.log('Warning! Possible earthquake detected. Stand by for further instructions.');
-      }
-
-      response.data.forEach(function(myHouse){
-
-        // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
-        if (myHouse.quakePayload !== undefined) {
-          if(Object.keys(myHouse.quakePayload).length > 0){
-            var payload = myHouse.quakePayload;
-
-            var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
-            if (myHouse.name === "snowy") {
-              quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
-            } else if (myHouse.name === "hhbear") {
-              quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
-            } else if (myHouse.name === "snail") {
-              quakeMagnitude[minionOneEyeQuakeIndex] = myQuakeMagnitude;
-            }// else if (myHouse.name === "OTHER_DEVICE_NAME")
-          }
-        }   
-        if (myHouse.motionPayload !== undefined) {
-          // switch on I'm home
-          if(Object.keys(myHouse.motionPayload).length > 0){
-            var payload = JSON.parse(myHouse.motionPayload);
-            if (myHouse.name === "snowy") {
-              $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
-            } else if (myHouse.name === "hhbear") {
-              $('#minionSwitch').prop('checked', payload.motionDetected);   
-            } else if (myHouse.name === "snail") {
-              $('#minionOneEyeSwitch').prop('checked', payload.motionDetected);
+    // Do not read any sensor data until after our init is complete
+    if (initInProgress === false)
+    {
+      $http({
+        method: 'GET',
+        url: '/sensordata'
+      }).then(function successCallback(response) {
+        var isQuake = response.data[0].quakeAlert;
+        sendAlertsIfNewQuakeDetected(isQuake);
+        // If we have not detected a quake, then if one sensor is showing a potential
+        // for a quake, send an SMS.
+        if (!isQuake && (sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
+          sentSingleAlert = true;
+          //sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
+          console.log('Warning! Possible earthquake detected. Stand by for further instructions.');
+        }
+  
+        response.data.forEach(function(myHouse){
+  
+          // only if the device is sending data, we update earthquake data, when no data is sending, the payload is like {} 
+          if (myHouse.quakePayload !== undefined) {
+            if(Object.keys(myHouse.quakePayload).length > 0){
+              var payload = myHouse.quakePayload;
+  
+              var myQuakeMagnitude = Math.abs(payload.gyroScaledZ) + Math.abs(payload.gyroScaledY) + Math.abs(payload.gyroScaledX);   
+              if (myHouse.name === "snowy") {
+                quakeMagnitude[minionGirlQuakeIndex] = myQuakeMagnitude;
+              } else if (myHouse.name === "hhbear") {
+                quakeMagnitude[minionQuakeIndex] = myQuakeMagnitude;
+              } else if (myHouse.name === "snail") {
+                quakeMagnitude[minionOneEyeQuakeIndex] = myQuakeMagnitude;
+              }// else if (myHouse.name === "OTHER_DEVICE_NAME")
+            }
+          }   
+          if (myHouse.motionPayload !== undefined) {
+            // switch on I'm home
+            if(Object.keys(myHouse.motionPayload).length > 0){
+              var payload = JSON.parse(myHouse.motionPayload);
+              if (myHouse.name === "snowy") {
+                $('#minionGirlSwitch').prop('checked', payload.motionDetected);   
+              } else if (myHouse.name === "hhbear") {
+                $('#minionSwitch').prop('checked', payload.motionDetected);   
+              } else if (myHouse.name === "snail") {
+                $('#minionOneEyeSwitch').prop('checked', payload.motionDetected);
+              }
             }
           }
-        }
-        
-        if(myHouse.humiturePayload !==undefined) {
-          if(Object.keys(myHouse.humiturePayload).length > 0) {
-              var payload = JSON.parse(myHouse.humiturePayload);
-              if(myHouse.name == "squirrel") {
-                  humidReadings[minionDuckQuakeIndex] = payload.humid;
-                  temperatureReadings[minionDuckQuakeIndex] = payload.temp;
-               
-              }
-              else if(myHouse.name == "snowy") {
-                  humidReadings[minionGirlQuakeIndex] = payload.humid;
-                  temperatureReadings[minionGirlQuakeIndex] = payload.temp;
-              }
-
-          }
-        }
-        // rain drop
-        if(myHouse.rainPayload !== undefined) {
-          if(Object.keys(myHouse.rainPayload).length > 0) {
-            var payload = JSON.parse(myHouse.rainPayload);
-            if(myHouse.name == "snowy") {
-              $scope.raindrop = payload.rainDetected;
+          
+          if(myHouse.humiturePayload !==undefined) {
+            if(Object.keys(myHouse.humiturePayload).length > 0) {
+                var payload = JSON.parse(myHouse.humiturePayload);
+                if(myHouse.name == "squirrel") {
+                    humidReadings[minionDuckQuakeIndex] = payload.humid;
+                    temperatureReadings[minionDuckQuakeIndex] = payload.temp;
+                 
+                }
+                else if(myHouse.name == "snowy") {
+                    humidReadings[minionGirlQuakeIndex] = payload.humid;
+                    temperatureReadings[minionGirlQuakeIndex] = payload.temp;
+                }
+  
             }
           }
-        }
+          // rain drop
+          if(myHouse.rainPayload !== undefined) {
+            if(Object.keys(myHouse.rainPayload).length > 0) {
+              var payload = JSON.parse(myHouse.rainPayload);
+              if(myHouse.name == "snowy") {
+                $scope.raindrop = payload.rainDetected;
+              }
+            }
+          }
+          
+        });
         
-      });
-      
-      
-    }, function errorCallback(response) {
-        console.log("failed to listen to sensor data");
-    });   
+        
+      }, function errorCallback(response) {
+          console.log("failed to listen to sensor data");
+      });   
+    }
   };
 
   var polling; // promise, set when we start intervals, used to cancel intervals.

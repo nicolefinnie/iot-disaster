@@ -160,8 +160,31 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
   
 });
 
+// Reset all cached sensor data in the server, if requested
+var clientResetSensorData = function(allHouses) {
+  return function(req, res) {
+    // TODO: Verify the request is for a 'reset'?
+    var requestData = req.body;
+    allHouses[0].quakeAlert = false;
+    allHouses[0].possibleQuakeAlert = false;
+    allHouses[0].humidityAlert = false;
+    allHouses[0].motionAlert = false;
+    allHouses[0].rainAlert = false;
+    for(i = 1; i < allHouses.length; i++) {
+      allHouses[i].quakePayload = {};
+      allHouses[i].motionPayload = {};
+      allHouses[i].humiturePayload = {};
+      allHouses[i].myQuakeMagnitude = 0;
+    }
+    var returnMessage = 'Reset sensor data request processed.';
+    console.log(returnMessage);
+    res.send(returnMessage);
+  };
+};
+
 app.post('/message', twilioServer.sendMessage(twilio, twilioSid, twilioToken));
 app.get('/sensordata', raspberryPiServer.returnCurrentSensorData(allHouses));
+app.post('/sensordata', clientResetSensorData(allHouses));
 app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, snowyDeviceID));
 
 // start server on the specified port and binding host
