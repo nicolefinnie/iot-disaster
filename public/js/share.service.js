@@ -37,7 +37,7 @@ var minionDuckNumber = '+4915146505935';
 var SMSData = {
   fromNumber: '+4915735994570',
   message: '',
-  targetNumber: [minionNumber, minionGirlNumber]
+  targetNumber: [minionNumber, minionGirlNumber, minionOneEyeNumber, minionDuckNumber]
 };
 
 //== for quake service ==

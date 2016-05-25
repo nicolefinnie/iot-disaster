@@ -1,8 +1,8 @@
 /*eslint-env node */
 
 exports.sendQuakeAlert = function(appClient, deviceId){
+  var calledCounter = 0;
   return function(req, res) {
-    var calledCounter = 0;
     appClient.connect();
     console.log('Trying to send alert');
       appClient.on("connect", function() {
@@ -13,6 +13,7 @@ exports.sendQuakeAlert = function(appClient, deviceId){
             appClient.publishDeviceEvent("raspberrypi", deviceId, "earthquake", "json", JSON.stringify(myData));
           }
           calledCounter++;
+          console.log("called counter: " + calledCounter);
       });
   };
 };
