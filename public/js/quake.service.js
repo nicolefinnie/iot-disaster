@@ -46,10 +46,10 @@ function initializeLineChart(){
 
 //Reduce the animation steps for demo clarity.
 var myLiveChart = new Chart(ctx).Line(startingData, 
-    {animationSteps: 100, 
+    {animationSteps: 50, 
      scaleOverride : true,
      scaleSteps : 10,
-     scaleStepWidth : 20,
+     scaleStepWidth : 10,
      scaleStartValue : 0, 
      scaleShowVerticalLines: false,
      pointDotRadius : 5,

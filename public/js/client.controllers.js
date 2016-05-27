@@ -66,7 +66,7 @@ function ($scope, $rootScope, $http, $interval) {
       Materialize.toast($toastContent, 5000);
       sendQuakeAlert();
       sentQuakeAlert = quakeDetected;
-      //sendMessage('Danger! Earthquake detected! Seek immediate cover!');
+      sendMessage('Danger! Earthquake detected! Seek immediate cover!');
       console.log('Danger! Earthquake detected! Seek immediate cover!');
     }
   }
@@ -87,7 +87,7 @@ function ($scope, $rootScope, $http, $interval) {
         // for a quake, send an SMS.
         if (!isQuake && (sentSingleAlert === false) && response.data[0].possibleQuakeAlert) {
           sentSingleAlert = true;
-          //sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
+          sendMessage('Warning! Possible earthquake detected. Stand by for further instructions.');
           console.log('Warning! Possible earthquake detected. Stand by for further instructions.');
         }
   
@@ -197,7 +197,7 @@ function ($scope, $rootScope, $http, $interval) {
   // Someone asked us to refresh
   $rootScope.$on('refreshSensorData', function(){
     // Check for new input events twice per second
-    var pollingInterval = 500;
+    var pollingInterval = 200;
     // Prevent race conditions - stop any current polling, then issue a new
     // refresh task immediately, and then start polling.  Note that polling
     // sleeps first, so we won't be running two refreshes back-to-back.

@@ -33,7 +33,7 @@ function initializeBarChart(){
   };
   
   var clientsChart = new Chart(ctx).Bar(barData,
-      {animationSteps: 15, 
+      {animationSteps: 10, 
     scaleOverride : true,
     scaleSteps : 4,
     scaleStepWidth : 10,
