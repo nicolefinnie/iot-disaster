@@ -86,14 +86,11 @@ var iotAppConfig = {
 var snowyDeviceID = 'b827eb92cee9';
 // Liam's 'hhbear' raspberryPi
 var hhbearDeviceID = 'b827eb80403e';
-// You can put your device ID in here if you want to use the device library
-var polarSnowDeviceToken = '';
 // Pradeep's 'Squirrel' raspberryPi 
-//Need changes here !
 var squirrelDeviceID ='b827eb930823';
 // Kai's 'snail' raspberryPi
 var snailDeviceID = 'b827ebacefce';
-
+var sendAlertCounter = 0;
 
 var appClient = new Client(iotAppConfig);
 
@@ -163,6 +160,7 @@ appClient.on("deviceEvent", function(deviceType, deviceId, eventType, format,pay
 // Reset all cached sensor data in the server, if requested
 var clientResetSensorData = function(allHouses) {
   return function(req, res) {
+    sendAlertCounter = 0;
     // TODO: Verify the request is for a 'reset'?
     var requestData = req.body;
     allHouses[0].quakeAlert = false;
@@ -185,7 +183,7 @@ var clientResetSensorData = function(allHouses) {
 app.post('/message', twilioServer.sendMessage(twilio, twilioSid, twilioToken));
 app.get('/sensordata', raspberryPiServer.returnCurrentSensorData(allHouses));
 app.post('/sensordata', clientResetSensorData(allHouses));
-app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, snowyDeviceID));
+app.get('/sendQuakeAlert', raspberryPiServer.sendQuakeAlert(appClient, snowyDeviceID, sendAlertCounter));
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
