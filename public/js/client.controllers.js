@@ -197,7 +197,7 @@ function ($scope, $rootScope, $http, $interval) {
   // Someone asked us to refresh
   $rootScope.$on('refreshSensorData', function(){
     // Check for new input events twice per second
-    var pollingInterval = 500;
+    var pollingInterval = 200;
     // Prevent race conditions - stop any current polling, then issue a new
     // refresh task immediately, and then start polling.  Note that polling
     // sleeps first, so we won't be running two refreshes back-to-back.

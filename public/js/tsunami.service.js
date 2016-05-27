@@ -64,7 +64,7 @@ function initializePieChart(){
           ];
   
   var doughnutChart1 = new Chart(document.getElementById('humitureCanvas1').getContext('2d')).Doughnut(data1,
-      {animationSteps: 100, 
+      {animationSteps: 10, 
     scaleOverride : true,
     scaleSteps : 6,
     scaleStepWidth : 5,
@@ -72,7 +72,7 @@ function initializePieChart(){
     });
   
   var doughnutChart2 = new Chart(document.getElementById('humitureCanvas2').getContext('2d')).Doughnut(data2,
-      {animationSteps: 100, 
+      {animationSteps: 10, 
     scaleOverride : true,
     scaleSteps : 6,
     scaleStepWidth : 5,
@@ -80,7 +80,7 @@ function initializePieChart(){
     });
   
   var doughnutChart3 = new Chart(document.getElementById('humitureCanvas3').getContext('2d')).Doughnut(data3,
-      {animationSteps: 100, 
+      {animationSteps: 10, 
     scaleOverride : true,
     scaleSteps : 6,
     scaleStepWidth : 5,
@@ -88,7 +88,7 @@ function initializePieChart(){
     });
    
   var doughnutChart4 = new Chart(document.getElementById('humitureCanvas4').getContext('2d')).Doughnut(data4,
-      {animationSteps: 100, 
+      {animationSteps: 10, 
     scaleOverride : true,
     scaleSteps : 6,
     scaleStepWidth : 5,
