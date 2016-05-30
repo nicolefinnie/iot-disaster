@@ -1,18 +1,15 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
+This is the source code of the IBM Bluemix IoT hackathon at IBM Germany Lab. 
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative](http://opensource.org/).
-
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
-
-Finally, consider defining some sprints and work items in Track & Plan to give 
-interested developers a sense of your cadence and upcoming enhancements.
+The hackathon took place on March 10 and March 11, which happens to be the 5 
+year anniversary of Japan 311 earthquake/tsunami. Inspired by that devastating 
+disaster, we hooked up 4 Raspberry Pi's simulating 4 different homes within the 
+same city. Each raspberry pi was assembled with multiple sensors such as 
+accelerometer sensors, motion sensors, humidity/temperature sensors and raindrop 
+sensors. When a single accelerometer sensor detects significant movements, all 
+registered smart phones will get a warning text, if multiple accelerometer 
+sensors detect movements in multiple homes, alarms on all raspberry pi's 
+will be triggered to wake people up and buy them valuable 10 seconds or more. 
+Since a Raspberry Pi is very cheap and affordable, we can build a similar 
+solution in the real world before the country implements a national alert system. 
+ 
 # iot-disaster
