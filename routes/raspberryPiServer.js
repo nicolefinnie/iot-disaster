@@ -1,11 +1,15 @@
 /*eslint-env node */
 
 exports.sendQuakeAlert = function(appClient, deviceId){
+  var sendQuakeAlertCounter = 0;
   return function(req, res) {
-    console.log('Trying to send alert');
-    var myData = {'command' : 'alert'};
-    console.log('Send an earthquake alert '+ JSON.stringify(myData));
-    appClient.publishDeviceEvent("raspberrypi", deviceId, "earthquake", "json", JSON.stringify(myData));
+    if (sendQuakeAlertCounter === 0) {
+      console.log('Trying to send alert');
+      var myData = {'command' : 'alert'};
+      console.log('Send an earthquake alert '+ JSON.stringify(myData));
+      appClient.publishDeviceEvent("raspberrypi", deviceId, "earthquake", "json", JSON.stringify(myData));
+      sendQuakeAlertCounter++;
+    }
   };
 };
 

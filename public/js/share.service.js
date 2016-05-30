@@ -12,7 +12,6 @@ var minion = "Finnie's Nerdy Palace";
 var minionGirl = "IBM Böblingen Lab";
 var minionOneEye = "Kai's Kingdom";
 var minionDuck = "Pradeep's Castle";
-var minionPurple = "Astronant Kepler's Town";
 
 //=== GPS position ==== 
 var minionPos = {"lat":48.688725, "lng": 8.995648};
@@ -26,16 +25,15 @@ var minionDialog = "Save me!!";
 var minionGirlDialog = "I'm a nerd...";
 var minionOneEyeDialog = "I have a monocle.";
 var minionDuckDialog = "I have a duck inner tube.";
-var minionPurpleDialog = "Ahhhhhhh!!!!";
 
 //=== SMS service ===
-var minionNumber = '+4915170002048';
-var minionGirlNumber = '+4915120172020';
-var minionOneEyeNumber = '+4917684041864';
-var minionDuckNumber = '+4915146505935';
+var minionNumber = '--the number you want to text--';
+var minionGirlNumber = '--the number you want to text--';
+var minionOneEyeNumber = '--the number you want to text--';
+var minionDuckNumber = '--the number you want to text--';
 
 var SMSData = {
-  fromNumber: '+4915735994570',
+  fromNumber: '--your twilio number--',
   message: '',
   targetNumber: [minionNumber, minionGirlNumber, minionOneEyeNumber, minionDuckNumber]
 };
