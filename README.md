@@ -11,5 +11,7 @@ sensors detect movements in multiple homes, alarms on all raspberry pi's
 will be triggered to wake people up and buy them valuable 10 seconds or more. 
 Since a Raspberry Pi is very cheap and affordable, we can build a similar 
 solution in the real world before the country implements a national alert system. 
+
+For the video of this demo, see https://youtu.be/wpACAzNdkdE
  
 # iot-disaster
